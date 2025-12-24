@@ -19,17 +19,17 @@ setInterval(nextSlide, 5000);
 const navLinks = document.querySelectorAll("nav a");
 const sections = document.querySelectorAll("section");
 
-navLinks.forEach((link) => {
+navLinks.forEach(link => {
     link.addEventListener("click", (e) => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute("href"));
 
-        sections.forEach((sec) => sec.classList.add("hidden"));
+        sections.forEach(sec => sec.classList.add("hidden"));
         target.classList.remove("hidden");
     });
 });
 
-// ================= CART =================
+// ================= CART FUNCTIONALITY =================
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 let isLoggedIn = false;
 
@@ -40,14 +40,14 @@ function updateCart() {
     count.textContent = cartItems.length;
 
     let total = 0;
-    cartItems.forEach((item) => {
+    cartItems.forEach(item => {
         total += item.price;
         const div = document.createElement("div");
         div.textContent = `${item.name} - $${item.price}`;
         cartList.appendChild(div);
     });
 
-    if (cartItems.length) {
+    if(cartItems.length){
         const totalDiv = document.createElement("div");
         totalDiv.innerHTML = `<strong>Total: $${total}</strong>`;
         cartList.appendChild(totalDiv);
@@ -56,23 +56,25 @@ function updateCart() {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
 }
 
-document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
+// Add products to cart
+document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         const name = btn.dataset.name;
         const price = parseFloat(btn.dataset.price);
-        cartItems.push({ name, price });
+        cartItems.push({name, price});
         updateCart();
         alert(`${name} added to cart!`);
     });
 });
 
+// Checkout
 document.getElementById("checkoutBtn").addEventListener("click", () => {
-    if (!isLoggedIn) {
+    if(!isLoggedIn){
         alert("Please login to checkout");
         openModal("#loginModal");
         return;
     }
-    if (cartItems.length === 0) {
+    if(cartItems.length === 0){
         alert("Your cart is empty!");
         return;
     }
@@ -82,46 +84,41 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 });
 
 // ================= MODALS =================
-function openModal(modalId) {
+function openModal(modalId){
     document.querySelector(modalId).classList.add("active");
 }
 
-function closeModal(modalId) {
+function closeModal(modalId){
     document.querySelector(modalId).classList.remove("active");
 }
 
-document.querySelectorAll(".modal .close").forEach((btn) => {
+// Close modal when clicking X
+document.querySelectorAll(".modal .close").forEach(btn => {
     btn.addEventListener("click", () => {
-        closeModal(btn.closest('.modal').id);
+        closeModal("#" + btn.closest('.modal').id);
     });
 });
 
-// ================= LOGIN / REGISTER =================
-document.getElementById("loginBtn").addEventListener("click", () => {
-    openModal("#loginModal");
-});
+// Open login/register modals
+document.getElementById("loginBtn").addEventListener("click", () => openModal("#loginModal"));
+document.getElementById("registerBtn").addEventListener("click", () => openModal("#registerModal"));
 
-document.getElementById("registerBtn").addEventListener("click", () => {
-    openModal("#registerModal");
-});
-
+// Simulate login
 document.querySelector("#loginModal .submit-btn").addEventListener("click", () => {
     isLoggedIn = true;
     alert("Login successful!");
     closeModal("#loginModal");
 });
 
-// ================= CONTACT FORM =================
-const contactForm = document.getElementById("contact-form");
-if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const name = document.getElementById("contact-name").value;
-        const email = document.getElementById("contact-email").value;
-        const message = document.getElementById("contact-message").value;
+// Open booking modal
+document.getElementById("bookServiceBtn").addEventListener("click", () => openModal("#bookingModal"));
+document.getElementById("bookServiceBtn2").addEventListener("click", () => openModal("#bookingModal"));
 
-        alert(`Thank you ${name}, we received your message!`);
-        contactForm.reset();
+// Optional: Submit booking form
+document.querySelectorAll("#bookingModal .submit-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        alert("Service booked successfully!");
+        closeModal("#bookingModal");
     });
 });
 

@@ -91,7 +91,6 @@ button:hover {
     border: none;
     padding: 10px 20px;
     font-size: 16px;
-    cursor: pointer;
 }
 
 /* Products Section Styles */
@@ -131,10 +130,6 @@ button:hover {
 #cart {
     padding: 20px;
     background-color: white;
-}
-
-.hidden {
-    display: none;
 }
 
 /* Location Section Styles */

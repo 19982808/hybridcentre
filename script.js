@@ -1,5 +1,5 @@
 // ================= HERO SLIDER =================
-const slides = document.querySelectorAll(".slide"); // Adjusted to match your HTML structure
+const slides = document.querySelectorAll(".slide"); // Ensure this matches your HTML structure
 let currentSlide = 0;
 
 function showSlide(index) {
@@ -12,7 +12,7 @@ function nextSlide() {
     showSlide(currentSlide);
 }
 
-// Auto-slide every 5s
+// Auto-slide every 5 seconds
 setInterval(nextSlide, 5000);
 
 // ================= SECTION NAVIGATION =================

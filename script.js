@@ -3,7 +3,7 @@ const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
 function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove("active"));
+    slides.forEach(s => s.classList.remove("active"));
     slides[index].classList.add("active");
 }
 
@@ -12,9 +12,7 @@ function nextSlide() {
     showSlide(currentSlide);
 }
 
-// Auto-slide every 5 seconds
 setInterval(nextSlide, 5000);
-
 
 // ================= NAVIGATION =================
 const navLinks = document.querySelectorAll("nav a");
@@ -23,23 +21,23 @@ const sections = document.querySelectorAll("section");
 navLinks.forEach(link => {
     link.addEventListener("click", e => {
         e.preventDefault();
-        const targetId = link.getAttribute("href").substring(1); // remove #
+        const targetId = link.getAttribute("href").substring(1);
 
         sections.forEach(sec => {
-            if(sec.id === targetId){
+            if (sec.id === targetId) {
                 sec.classList.remove("hidden-section");
             } else {
                 sec.classList.add("hidden-section");
             }
         });
 
-        // Scroll to top smoothly
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
 // ================= CART =================
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+let isLoggedIn = false;
 
 function updateCart() {
     const cartList = document.getElementById("cart-items");
@@ -55,7 +53,7 @@ function updateCart() {
         cartList.appendChild(div);
     });
 
-    if(cartItems.length > 0){
+    if (cartItems.length > 0) {
         const totalDiv = document.createElement("div");
         totalDiv.innerHTML = `<strong>Total: $${total}</strong>`;
         cartList.appendChild(totalDiv);
@@ -74,8 +72,14 @@ document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
     });
 });
 
+// Checkout with login check
 document.getElementById("checkoutBtn").addEventListener("click", () => {
-    if(cartItems.length === 0){
+    if (!isLoggedIn) {
+        alert("Please login or register to checkout!");
+        openModal(loginModal);
+        return;
+    }
+    if (cartItems.length === 0) {
         alert("Your cart is empty!");
         return;
     }
@@ -85,36 +89,53 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 });
 
 // ================= MODALS =================
-function openModal(modal) {
-    modal.classList.remove("hidden");
-}
+function openModal(modal) { modal.classList.add("active"); }
+function closeModal(modal) { modal.classList.remove("active"); }
 
-function closeModal(modal) {
-    modal.classList.add("hidden");
-}
-
-// Login modal
+// Login Modal
 const loginBtn = document.getElementById("loginBtn");
 const loginModal = document.getElementById("loginModal");
 loginBtn.addEventListener("click", () => openModal(loginModal));
-
 loginModal.querySelector(".close").addEventListener("click", () => closeModal(loginModal));
 
-// Register modal
+// Handle login form
+loginModal.querySelector(".submit-btn").addEventListener("click", () => {
+    const username = loginModal.querySelector("input[type='text']").value;
+    const password = loginModal.querySelector("input[type='password']").value;
+    if (username && password) {
+        isLoggedIn = true;
+        alert(`Welcome, ${username}! You are now logged in (frontend only).`);
+        closeModal(loginModal);
+    } else {
+        alert("Please enter username and password.");
+    }
+});
+
+// Register Modal
 const registerBtn = document.getElementById("registerBtn");
 const registerModal = document.getElementById("registerModal");
 registerBtn.addEventListener("click", () => openModal(registerModal));
-
 registerModal.querySelector(".close").addEventListener("click", () => closeModal(registerModal));
+
+// Handle register form
+registerModal.querySelector(".submit-btn").addEventListener("click", () => {
+    const username = registerModal.querySelector("input[type='text']").value;
+    const email = registerModal.querySelector("input[type='email']").value;
+    const password = registerModal.querySelector("input[type='password']").value;
+    if (username && email && password) {
+        isLoggedIn = true;
+        alert(`Thank you ${username}! You are registered (frontend only).`);
+        closeModal(registerModal);
+    } else {
+        alert("Please fill in all fields.");
+    }
+});
 
 // ================= CONTACT FORM =================
 const contactForm = document.getElementById("contact-form");
-contactForm.addEventListener("submit", (e) => {
+contactForm.addEventListener("submit", e => {
     e.preventDefault();
     const name = document.getElementById("contact-name").value;
-    const email = document.getElementById("contact-email").value;
-    const message = document.getElementById("contact-message").value;
-
     alert(`Thank you ${name}, we received your message!`);
     contactForm.reset();
 });
@@ -122,4 +143,3 @@ contactForm.addEventListener("submit", (e) => {
 // ================= INITIALIZE =================
 updateCart();
 showSlide(currentSlide);
-

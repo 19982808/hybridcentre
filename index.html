@@ -2,154 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hybrid Vehicle Service Centre</title>
+  <title>Hybrid Service Centre</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Font Awesome Icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  />
-
   <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-</head>
+  <link rel="stylesheet" href="styles.css">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
 <body>
 
-<!-- ================= HEADER / NAV ================= -->
-<header class="header">
-  <div class="logo">Hybrid Centre</div>
+<!-- NAVBAR -->
+<header class="site-header">
+  <div class="logo-container">
+    <h1>HYBRID CENTRE</h1>
+  </div>
 
-  <nav class="nav">
-    <a href="#hero">Home</a>
-    <a href="#products">Products</a>
-    <a href="#locations">Location</a>
-    <a href="#contact">Contact</a>
+  <nav>
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#contact" class="nav-link">Contact</a>
     <button id="loginBtn">Login</button>
     <button id="registerBtn">Register</button>
-    <button id="adminBtn">Admin</button>
   </nav>
 </header>
 
-<!-- ================= HERO SECTION ================= -->
-<section id="hero" class="hero">
-  <div class="hero-slider">
-    <div class="slide active" style="background-image:url('https://via.placeholder.com/1200x500?text=Hybrid+Service+1')"></div>
-    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Hybrid+Service+2')"></div>
-    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Hybrid+Service+3')"></div>
-    <div class="slide" style="background-image:url('https://via.placeholder.com/1200x500?text=Hybrid+Service+4')"></div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('images/hero1.jpg')"></div>
+    <div class="slide" style="background-image:url('images/hero2.jpg')"></div>
+    <div class="slide" style="background-image:url('images/hero3.jpg')"></div>
+    <div class="slide" style="background-image:url('images/hero4.jpg')"></div>
   </div>
 
   <div class="hero-content">
-    <h1>Expert Hybrid Vehicle Services</h1>
-    <p>Diagnostics • Batteries • Gearbox • Suspension</p>
-    <a href="#contact" class="cta">Book Service</a>
+    <h1>Hybrid Vehicle Experts</h1>
+    <p>Battery • Engine • Suspension • Gearbox</p>
+    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
   </div>
 </section>
 
-<!-- ================= PRODUCTS ================= -->
-<section id="products" class="products">
-  <h2>Our Products & Services</h2>
+<!-- PRODUCTS -->
+<section id="products">
+  <h2>Our Products</h2>
 
-  <div class="product-grid">
+  <div class="products-grid">
 
     <div class="product">
-      <i class="fa-solid fa-car-battery product-icon"></i>
+      <i class="fa-solid fa-battery-full product-icon"></i>
       <h3>Hybrid Batteries</h3>
-      <p>High-quality battery packs & modules.</p>
-      <button>Buy Now</button>
+      <p>$500</p>
+      <button class="add-to-cart-btn" data-name="Hybrid Battery" data-price="500">Buy</button>
     </div>
 
     <div class="product">
       <i class="fa-solid fa-gears product-icon"></i>
-      <h3>Gear Box</h3>
-      <p>Hybrid gearbox repair & replacement.</p>
-      <button>Buy Now</button>
+      <h3>Gearbox</h3>
+      <p>$600</p>
+      <button class="add-to-cart-btn" data-name="Gearbox" data-price="600">Buy</button>
     </div>
 
     <div class="product">
-      <i class="fa-solid fa-screwdriver-wrench product-icon"></i>
+      <i class="fa-solid fa-car product-icon"></i>
       <h3>Suspension</h3>
-      <p>Suspension diagnostics & repair.</p>
-      <button>Buy Now</button>
-    </div>
-
-    <div class="product">
-      <i class="fa-solid fa-bolt product-icon"></i>
-      <h3>Spark Plugs</h3>
-      <p>Hybrid compatible spark plugs.</p>
-      <button>Buy Now</button>
+      <p>$250</p>
+      <button class="add-to-cart-btn" data-name="Suspension" data-price="250">Buy</button>
     </div>
 
   </div>
 </section>
 
-<!-- ================= LOCATION ================= -->
-<section id="locations" class="locations">
-  <h2>Our Location</h2>
-  <p><strong>Kirinyaga Road, behind Indian Mosque, Grogon Lane</strong></p>
-
-  <div class="map">
-    <iframe
-      src="https://www.google.com/maps?q=Kirinyaga+Road+Nairobi&output=embed"
-      loading="lazy">
-    </iframe>
-  </div>
+<!-- CART -->
+<section id="cart" class="hidden">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <button id="checkoutBtn">Checkout</button>
 </section>
 
-<!-- ================= CONTACT ================= -->
-<section id="contact" class="contact">
+<!-- CONTACT -->
+<section id="contact" class="hidden">
   <h2>Contact Us</h2>
-  <p>Book service or contact us directly</p>
 
-  <div class="contact-actions">
-    <a href="tel:0780328599" class="contact-btn">
-      <i class="fa-solid fa-phone"></i> Call
-    </a>
-
-    <a href="https://wa.me/254780328599" class="contact-btn whatsapp">
-      <i class="fa-brands fa-whatsapp"></i> WhatsApp
-    </a>
-  </div>
+  <p>
+    📞 <a href="tel:0780328599">0780328599</a><br>
+    💬 <a href="https://wa.me/254780328599" target="_blank">WhatsApp</a>
+  </p>
 </section>
 
-<!-- ================= LOGIN MODAL ================= -->
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookingModal">
+  <div class="modal-content">
+    <span class="close" id="closeBooking">&times;</span>
+    <h2>Book Service</h2>
+    <input placeholder="Name">
+    <input placeholder="Phone">
+    <textarea placeholder="Describe issue"></textarea>
+    <button class="submit-btn">Submit</button>
+  </div>
+</div>
+
+<!-- LOGIN -->
 <div class="modal" id="loginModal">
   <div class="modal-content">
-    <h3>Login</h3>
-    <input type="text" placeholder="Username">
+    <span class="close" id="closeLogin">&times;</span>
+    <h2>Login</h2>
+    <input placeholder="Username">
     <input type="password" placeholder="Password">
-    <button>Login</button>
-    <span class="close">&times;</span>
+    <button class="submit-btn">Login</button>
   </div>
 </div>
 
-<!-- ================= REGISTER MODAL ================= -->
+<!-- REGISTER -->
 <div class="modal" id="registerModal">
   <div class="modal-content">
-    <h3>Register</h3>
-    <input type="text" placeholder="Username">
-    <input type="email" placeholder="Email">
+    <span class="close" id="closeRegister">&times;</span>
+    <h2>Register</h2>
+    <input placeholder="Username">
+    <input placeholder="Email">
     <input type="password" placeholder="Password">
-    <button>Register</button>
-    <span class="close">&times;</span>
+    <button class="submit-btn">Register</button>
   </div>
 </div>
 
-<!-- ================= ADMIN ================= -->
-<div class="modal" id="adminModal">
-  <div class="modal-content">
-    <h3>Admin Panel (Demo)</h3>
-    <p>Frontend demo only</p>
-    <button>Manage Products</button>
-    <button>View Orders</button>
-    <span class="close">&times;</span>
-  </div>
-</div>
-
-<!-- ================= JS ================= -->
 <script src="script.js"></script>
-
 </body>
 </html>

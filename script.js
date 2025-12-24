@@ -89,43 +89,47 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 });
 
 // ================= MODALS =================
-function openModal(modal) { modal.classList.add("active"); }
-function closeModal(modal) { modal.classList.remove("active"); }
+let isLoggedIn = false;
 
-// Login Modal
+// Elements
 const loginBtn = document.getElementById("loginBtn");
+const registerBtn = document.getElementById("registerBtn");
 const loginModal = document.getElementById("loginModal");
-loginBtn.addEventListener("click", () => openModal(loginModal));
-loginModal.querySelector(".close").addEventListener("click", () => closeModal(loginModal));
+const registerModal = document.getElementById("registerModal");
 
-// Handle login form
-loginModal.querySelector(".submit-btn").addEventListener("click", () => {
-    const username = loginModal.querySelector("input[type='text']").value;
-    const password = loginModal.querySelector("input[type='password']").value;
-    if (username && password) {
+// Open modals
+loginBtn.addEventListener("click", ()=> loginModal.classList.add("active"));
+registerBtn.addEventListener("click", ()=> registerModal.classList.add("active"));
+
+// Close modals
+document.querySelectorAll(".close").forEach(btn=>{
+    btn.addEventListener("click", e=>{
+        e.target.closest(".modal").classList.remove("active");
+    });
+});
+
+// LOGIN
+document.getElementById("login-submit").addEventListener("click", ()=>{
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    if(username && password){
         isLoggedIn = true;
-        alert(`Welcome, ${username}! You are now logged in (frontend only).`);
-        closeModal(loginModal);
+        alert(`Welcome, ${username}! You are logged in (frontend only).`);
+        loginModal.classList.remove("active");
     } else {
-        alert("Please enter username and password.");
+        alert("Please fill in username and password.");
     }
 });
 
-// Register Modal
-const registerBtn = document.getElementById("registerBtn");
-const registerModal = document.getElementById("registerModal");
-registerBtn.addEventListener("click", () => openModal(registerModal));
-registerModal.querySelector(".close").addEventListener("click", () => closeModal(registerModal));
-
-// Handle register form
-registerModal.querySelector(".submit-btn").addEventListener("click", () => {
-    const username = registerModal.querySelector("input[type='text']").value;
-    const email = registerModal.querySelector("input[type='email']").value;
-    const password = registerModal.querySelector("input[type='password']").value;
-    if (username && email && password) {
+// REGISTER
+document.getElementById("register-submit").addEventListener("click", ()=>{
+    const username = document.getElementById("register-username").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    if(username && email && password){
         isLoggedIn = true;
         alert(`Thank you ${username}! You are registered (frontend only).`);
-        closeModal(registerModal);
+        registerModal.classList.remove("active");
     } else {
         alert("Please fill in all fields.");
     }
@@ -143,3 +147,4 @@ contactForm.addEventListener("submit", e => {
 // ================= INITIALIZE =================
 updateCart();
 showSlide(currentSlide);
+

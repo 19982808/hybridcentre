@@ -15,6 +15,7 @@ function nextSlide() {
 // Auto-slide every 5 seconds
 setInterval(nextSlide, 5000);
 
+
 // ================= NAVIGATION =================
 const navLinks = document.querySelectorAll("nav a");
 const sections = document.querySelectorAll("section");
@@ -22,10 +23,18 @@ const sections = document.querySelectorAll("section");
 navLinks.forEach(link => {
     link.addEventListener("click", e => {
         e.preventDefault();
-        const targetId = link.getAttribute("href").substring(1); // Remove #
-        sections.forEach(sec => sec.classList.add("hidden-section"));
-        const targetSection = document.getElementById(targetId);
-        if(targetSection) targetSection.classList.remove("hidden-section");
+        const targetId = link.getAttribute("href").substring(1); // remove #
+
+        sections.forEach(sec => {
+            if(sec.id === targetId){
+                sec.classList.remove("hidden-section");
+            } else {
+                sec.classList.add("hidden-section");
+            }
+        });
+
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
@@ -113,3 +122,4 @@ contactForm.addEventListener("submit", (e) => {
 // ================= INITIALIZE =================
 updateCart();
 showSlide(currentSlide);
+

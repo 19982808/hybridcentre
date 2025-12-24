@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hybrid Service Centre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles1.css">
+
+    <!-- Font Awesome (ICONS FIXED) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ================= HEADER / NAV ================= -->
+<header class="site-header">
+    <div class="logo-container">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <h1>HYBRID CENTRE</h1>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#products" class="nav-link">Products</a></li>
+            <li><a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><a href="#location" class="nav-link">Location</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><button id="#admin panel">Amin Panel</button></li>
+            <li><button id="loginBtn">Login</button></li>
+            <li><button id="registerBtn">Register</button></li>
+
+        </ul>
+    </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="slideshow">
+        <div class="slide active" style="background-image:url('images/hero1.png')"></div>
+        <div class="slide" style="background-image:url('images/hero2.png')"></div>
+        <div class="slide" style="background-image:url('images/hero3.png')"></div>
+        <div class="slide" style="background-image:url('images/hero4.png')"></div>
+    </div>
+
+    <div class="hero-content">
+        <h1>Expert Hybrid Vehicle Services</h1>
+        <p>Diagnostics • Battery Care • Hybrid Maintenance</p>
+        
+    </div>
+
+    <div class="dots"></div>
+</section>
+
+<!-- ================= HOME ================= -->
+<section id="home">
+    <h2>Welcome to Hybrid Centre</h2>
+    <p>Your trusted supplier of genuine hybrid vehicle parts and services.</p>
+</section>
+<section id="admin" class="hidden-section">
+    <h2>Admin Dashboard</h2>
+
+    <form id="add-product-form">
+        <input type="text" id="p-name" placeholder="Product Name" required>
+        <input type="number" id="p-price" placeholder="Price" required>
+
+        <select id="p-icon">
+            <option value="fa-battery-full">Battery</option>
+            <option value="fa-wrench">Engine</option>
+            <option value="fa-bolt">Spark Plug</option>
+            <option value="fa-gears">Gearbox</option>
+        </select>
+
+        <button type="submit">Add Product</button>
+    </form>
+
+    <div id="admin-products"></div>
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+<section id="products" class="hidden-section">
+    <h2>Our Products</h2>
+
+    <div id="product-list">
+
+        <div class="product">
+            <i class="fa-solid fa-battery-full product-icon"></i>
+            <h3>Hybrid Batteries & Modules</h3>
+            <p>High-quality battery packs compatible with hybrid vehicles.</p>
+            <p>Price: $500</p>
+            <button class="add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-gears product-icon"></i>
+            <h3>Electric Motors & Generators</h3>
+            <p>Reliable motors and motor-generators.</p>
+            <p>Price: $750</p>
+            <button class="add-to-cart-btn" data-name="Electric Motors" data-price="750">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-bolt product-icon"></i>
+            <h3>Inverters & Power Control Units</h3>
+            <p>Efficient energy management components.</p>
+            <p>Price: $400</p>
+            <button class="add-to-cart-btn" data-name="Inverters" data-price="400">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-engine product-icon"></i>
+            <h3>Engine Components</h3>
+            <p>Spark plugs, filters, pistons and exhaust parts.</p>
+            <p>Price: $350</p>
+            <button class="add-to-cart-btn" data-name="Engine Components" data-price="350">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-fan product-icon"></i>
+            <h3>Cooling Systems</h3>
+            <p>Cooling fans, pumps & thermal components.</p>
+            <p>Price: $200</p>
+            <button class="add-to-cart-btn" data-name="Cooling Systems" data-price="200">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-car-side product-icon"></i>
+            <h3>Suspension Parts</h3>
+            <p>Shocks, struts and springs.</p>
+            <p>Price: $250</p>
+            <button class="add-to-cart-btn" data-name="Suspension Parts" data-price="250">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-gears product-icon"></i>
+            <h3>Gearbox & Transmission</h3>
+            <p>Automatic & CVT gearboxes.</p>
+            <p>Price: $600</p>
+            <button class="add-to-cart-btn" data-name="Gearbox" data-price="600">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <i class="fa-solid fa-triangle-exclamation product-icon"></i>
+            <h3>Auxiliary & Safety Parts</h3>
+            <p>High-voltage cables and safety components.</p>
+            <p>Price: $150</p>
+            <button class="add-to-cart-btn" data-name="Auxiliary Parts" data-price="150">Buy Now</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= CART ================= -->
+<section id="cart" class="hidden-section">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkout-btn">Checkout</button>
+</section>
+
+<!-- ================= LOCATION ================= -->
+<section id="location" class="hidden-section">
+    <h2>Our Location</h2>
+    <p>Kirinyaga Road, behind Indian Mosque, Grogon Lane</p>
+    <iframe 
+        src="https://www.google.com/maps?q=Kirinyaga+road+behind+Indian+Mosque,+Kenya&output=embed"
+        width="100%" height="300" style="border:0;" allowfullscreen>
+    </iframe>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="hidden-section">
+    <h2>Contact Us</h2>
+
+    <p>
+        <i class="fa-solid fa-phone"></i>
+        <a href="tel:0780328599">0780328599</a>
+    </p>
+
+    <p>
+        <i class="fa-brands fa-whatsapp"></i>
+        <a href="https://wa.me/254780328599" target="_blank">Chat on WhatsApp</a>
+    </p>
+
+    <a href="#products" class="cta-btn">Book / Order Now</a>
+
+    <form id="contact-form">
+        <input type="text" id="contact-name" placeholder="Your Name" required>
+        <input type="email" id="contact-email" placeholder="Your Email" required>
+        <textarea id="contact-message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+
+    <p id="contact-status"></p>
+</section>
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminLoginModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" id="closeAdminLogin">&times;</span>
+    <h2>Admin Login</h2>
+    <input type="text" id="admin-username" placeholder="Username" />
+    <input type="password" id="admin-password" placeholder="Password" />
+    <button id="adminLoginBtn">Login</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<section id="admin-panel" class="admin hidden">
+  <div class="admin-header">
+    <h2>Admin Dashboard</h2>
+    <button id="logoutAdmin">Logout</button>
+  </div>
+
+  <div class="admin-content">
+    <div class="admin-card">
+      <h3>Products</h3>
+      <ul id="admin-products"></ul>
+    </div>
+
+    <div class="admin-card">
+      <h3>Orders (Cart)</h3>
+      <ul id="admin-orders"></ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= LOGIN MODAL ================= -->
+<div id="loginModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close" id="closeLogin">&times;</span>
+        <h2>Login</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button class="submit-btn">Login</button>
+    </div>
+</div>
+
+<!-- ================= REGISTER MODAL ================= -->
+<div id="registerModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close" id="closeRegister">&times;</span>
+        <h2>Register</h2>
+        <input type="text" placeholder="Username">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="submit-btn">Register</button>
+    </div>
+</div>
+
+<button id="mpesa-pay" class="cta-btn">
+    Pay with M-Pesa
+</button>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>&copy; 2025 Hybrid Service Centre. All rights reserved.</p>
+</footer>
+
+<!-- JS -->
+<script src="script1.js"></script>
+
+</body>
+</html>

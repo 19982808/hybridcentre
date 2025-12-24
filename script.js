@@ -1,5 +1,5 @@
 // ================= HERO SLIDER =================
-const slides = document.querySelectorAll(".slide"); // Ensure this matches your HTML structure
+const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
 function showSlide(index) {
@@ -111,17 +111,6 @@ document.querySelector("#loginModal .submit-btn").addEventListener("click", () =
     closeModal("#loginModal");
 });
 
-// ================= BOOK SERVICE =================
-document.querySelectorAll(".cta-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const bookingSection = document.querySelector("#bookingModal");
-        if (bookingSection) {
-            sections.forEach((sec) => sec.classList.add("hidden"));
-            bookingSection.classList.remove("hidden");
-        }
-    });
-});
-
 // ================= CONTACT FORM =================
 const contactForm = document.getElementById("contact-form");
 if (contactForm) {
@@ -134,7 +123,7 @@ if (contactForm) {
         alert(`Thank you ${name}, we received your message!`);
         contactForm.reset();
     });
-}
+});
 
 // ================= INITIALIZE =================
 updateCart();

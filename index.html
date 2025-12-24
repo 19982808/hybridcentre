@@ -1,178 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Hybrid Service Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hybrid Service Centre</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<!-- Header -->
+<!-- HEADER -->
 <header class="site-header">
-    <div class="logo-container">
-        <img src="logo.png" class="logo" alt="Hybrid Centre Logo">
-        <h1>HYBRID CENTRE</h1>
-    </div>
-    <nav>
-        <a href="#home" class="nav-link">Home</a>
-        <a href="#products" class="nav-link">Products</a>
-        <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-        <a href="#location" class="nav-link">Location</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <button id="loginBtn">Login</button>
-        <button id="registerBtn">Register</button>
-    </nav>
+  <div class="logo-container">
+    <img src="images/logo.png" class="logo" alt="Logo">
+    <h1>HYBRID CENTRE</h1>
+  </div>
+  <nav>
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#location" class="nav-link">Location</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Register</button>
+  </nav>
 </header>
 
-<!-- Hero Section -->
+<!-- HERO -->
 <section class="hero" id="home">
-    <div class="slideshow">
-        <div class="slide active" style="background-image:url('hero1.jpg')"></div>
-        <div class="slide" style="background-image:url('hero2.jpg')"></div>
-        <div class="slide" style="background-image:url('hero3.jpg')"></div>
-        <div class="slide" style="background-image:url('hero4.jpg')"></div>
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('images/hero1.png')"></div>
+    <div class="slide" style="background-image:url('images/hero2.png')"></div>
+    <div class="slide" style="background-image:url('images/hero3.png')"></div>
+    <div class="slide" style="background-image:url('images/hero4.png')"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Expert Hybrid Vehicle Services</h1>
+    <p>Diagnostics • Battery • Hybrid Maintenance</p>
+    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="hidden-section">
+  <h2>Our Products</h2>
+  <div id="product-list">
+    <div class="product">
+      <i class="fa-solid fa-battery-full product-icon"></i>
+      <h3>Hybrid Batteries & Modules</h3>
+      <p>High-quality battery packs compatible with hybrid vehicles.</p>
+      <p>Price: $500</p>
+      <button class="add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
     </div>
-    <div class="hero-content">
-        <h1>Expert Hybrid Vehicle Services</h1>
-        <p>Diagnostics • Battery • Engine • Suspension • Gearbox</p>
-        <button class="cta-btn" id="bookServiceBtn">Book Service</button>
+    <div class="product">
+      <i class="fa-solid fa-gears product-icon"></i>
+      <h3>Electric Motors & Generators</h3>
+      <p>Reliable motors and motor-generators.</p>
+      <p>Price: $750</p>
+      <button class="add-to-cart-btn" data-name="Electric Motors" data-price="750">Buy Now</button>
     </div>
-</section>
-
-<!-- Products Section -->
-<section id="products">
-    <h2>Our Products</h2>
-    <div class="products-grid">
-        <!-- Product 1 -->
-        <div class="product">
-            <img src="battery.jpg" alt="Hybrid Battery">
-            <h3>Hybrid Batteries & Modules</h3>
-            <p>High-quality hybrid battery packs.</p>
-            <p>$500</p>
-            <button class="add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="product">
-            <img src="engine.jpg" alt="Hybrid Engine">
-            <h3>Hybrid Engine Parts</h3>
-            <p>Reliable engine components for hybrids.</p>
-            <p>$800</p>
-            <button class="add-to-cart-btn" data-name="Hybrid Engine" data-price="800">Buy Now</button>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="product">
-            <img src="suspension.jpg" alt="Suspension">
-            <h3>Hybrid Suspension Kits</h3>
-            <p>Top-quality suspension systems.</p>
-            <p>$300</p>
-            <button class="add-to-cart-btn" data-name="Suspension Kits" data-price="300">Buy Now</button>
-        </div>
-
-        <!-- Product 4 -->
-        <div class="product">
-            <img src="gearbox.jpg" alt="Gearbox">
-            <h3>Hybrid Gearbox</h3>
-            <p>Durable gearboxes for smooth driving.</p>
-            <p>$700</p>
-            <button class="add-to-cart-btn" data-name="Gearbox" data-price="700">Buy Now</button>
-        </div>
-
-        <!-- Product 5 -->
-        <div class="product">
-            <img src="brakes.jpg" alt="Brakes">
-            <h3>Hybrid Brake Pads</h3>
-            <p>High-performance brake pads for safety.</p>
-            <p>$120</p>
-            <button class="add-to-cart-btn" data-name="Brake Pads" data-price="120">Buy Now</button>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product">
-            <img src="filters.jpg" alt="Filters">
-            <h3>Hybrid Air & Oil Filters</h3>
-            <p>Premium filters for engine protection.</p>
-            <p>$80</p>
-            <button class="add-to-cart-btn" data-name="Filters" data-price="80">Buy Now</button>
-        </div>
-
-        <!-- Product 7 -->
-        <div class="product">
-            <img src="tires.jpg" alt="Tires">
-            <h3>Hybrid Tires</h3>
-            <p>Durable tires for all terrains.</p>
-            <p>$400</p>
-            <button class="add-to-cart-btn" data-name="Tires" data-price="400">Buy Now</button>
-        </div>
-
-        <!-- Product 8 -->
-        <div class="product">
-            <img src="sparkplugs.jpg" alt="Spark Plugs">
-            <h3>Hybrid Spark Plugs</h3>
-            <p>Long-lasting spark plugs for performance.</p>
-            <p>$60</p>
-            <button class="add-to-cart-btn" data-name="Spark Plugs" data-price="60">Buy Now</button>
-        </div>
+    <div class="product">
+      <i class="fa-solid fa-bolt product-icon"></i>
+      <h3>Inverters & Power Control Units</h3>
+      <p>Efficient energy management components.</p>
+      <p>Price: $400</p>
+      <button class="add-to-cart-btn" data-name="Inverters" data-price="400">Buy Now</button>
     </div>
-</section>
-
-<!-- Cart Section -->
-<section id="cart" class="hidden">
-    <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-    <button id="checkoutBtn">Checkout</button>
-</section>
-
-<!-- Location Section -->
-<section id="location" class="hidden">
-    <h2>Our Location</h2>
-    <p>Kirinyaga Road, behind Indian Mosque, Grogon Lane</p>
-    <iframe src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Nairobi&output=embed" width="100%" height="350" style="border:0;" loading="lazy"></iframe>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="hidden">
-    <h2>Contact Us</h2>
-    <p><i class="fa-solid fa-phone"></i> <a href="tel:0780328599">0780328599</a></p>
-    <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/254780328599" target="_blank">WhatsApp Us</a></p>
-    <button class="cta-btn" id="bookServiceBtn2">Book Service</button>
-</section>
-
-<!-- Modals -->
-<div class="modal" id="bookingModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Book Service</h2>
-        <input placeholder="Your Name">
-        <input placeholder="Phone Number">
-        <textarea placeholder="Describe issue"></textarea>
-        <button class="submit-btn">Submit</button>
+    <div class="product">
+      <i class="fa-solid fa-engine product-icon"></i>
+      <h3>Engine Components</h3>
+      <p>Spark plugs, filters, pistons, and exhaust parts.</p>
+      <p>Price: $350</p>
+      <button class="add-to-cart-btn" data-name="Engine Components" data-price="350">Buy Now</button>
     </div>
+    <div class="product">
+      <i class="fa-solid fa-fan product-icon"></i>
+      <h3>Cooling Systems</h3>
+      <p>Cooling fans, pumps & thermal components.</p>
+      <p>Price: $200</p>
+      <button class="add-to-cart-btn" data-name="Cooling Systems" data-price="200">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-car-side product-icon"></i>
+      <h3>Suspension Parts</h3>
+      <p>Shocks, struts, and springs.</p>
+      <p>Price: $250</p>
+      <button class="add-to-cart-btn" data-name="Suspension Parts" data-price="250">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-gears product-icon"></i>
+      <h3>Gearbox & Transmission</h3>
+      <p>Automatic & CVT gearboxes.</p>
+      <p>Price: $600</p>
+      <button class="add-to-cart-btn" data-name="Gearbox" data-price="600">Buy Now</button>
+    </div>
+    <div class="product">
+      <i class="fa-solid fa-triangle-exclamation product-icon"></i>
+      <h3>Auxiliary & Safety Parts</h3>
+      <p>High-voltage cables and safety components.</p>
+      <p>Price: $150</p>
+      <button class="add-to-cart-btn" data-name="Auxiliary Parts" data-price="150">Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- CART -->
+<section id="cart" class="hidden-section">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <button id="checkoutBtn">Checkout</button>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="hidden-section">
+  <h2>Our Location</h2>
+  <iframe 
+    src="https://www.google.com/maps?q=Kirinyaga+road+behind+Indian+Mosque,+Kenya&output=embed" 
+    width="100%" height="300" style="border:0;" allowfullscreen>
+  </iframe>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="hidden-section">
+  <h2>Contact Us</h2>
+  <p><i class="fa-solid fa-phone"></i> <a href="tel:0780328599">0780328599</a></p>
+  <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/254780328599" target="_blank">Chat on WhatsApp</a></p>
+  <form id="contact-form">
+    <input type="text" id="contact-name" placeholder="Your Name" required>
+    <input type="email" id="contact-email" placeholder="Your Email" required>
+    <textarea id="contact-message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <p id="contact-status"></p>
+</section>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Login</h2>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button class="submit-btn">Login</button>
+  </div>
 </div>
 
-<div class="modal" id="loginModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Login</h2>
-        <input placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button class="submit-btn">Login</button>
-    </div>
+<!-- REGISTER MODAL -->
+<div id="registerModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Register</h2>
+    <input type="text" placeholder="Username">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button class="submit-btn">Register</button>
+  </div>
 </div>
 
-<div class="modal" id="registerModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Register</h2>
-        <input placeholder="Username">
-        <input placeholder="Email">
-        <input type="password" placeholder="Password">
-        <button class="submit-btn">Register</button>
-    </div>
-</div>
+<footer>
+  <p>&copy; 2025 Hybrid Service Centre. All rights reserved.</p>
+</footer>
 
 <script src="script.js"></script>
 </body>

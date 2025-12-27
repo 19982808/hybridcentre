@@ -39,11 +39,11 @@ button:hover {
 .logo-container {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .logo {
     height: 50px;
-    margin-right: 10px;
 }
 
 nav {
@@ -53,91 +53,119 @@ nav {
     gap: 10px;
 }
 
-/* ================= HERO SLIDER ================= */
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 6px 10px;
+}
+
+nav a:hover {
+    background: #444;
+    border-radius: 4px;
+}
+
+/* ================= HERO ================= */
 .hero {
     position: relative;
     height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
     overflow: hidden;
+    background: #000;
+}
+
+.slideshow {
+    position: absolute;
+    inset: 0;
 }
 
 .slide {
     position: absolute;
     inset: 0;
-    background-size: cover;
     background-position: center;
+    background-size: cover;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 1s ease-in-out;
 }
 
 .slide.active {
     opacity: 1;
 }
 
-.dots {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #ccc;
-    cursor: pointer;
+.cta-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ffc107;
+    color: #333;
+    border-radius: 5px;
 }
 
-.dot.active {
-    background-color: #28a745;
+.cta-btn:hover {
+    background-color: #e0a800;
 }
 
 /* ================= PRODUCTS ================= */
 #product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
 }
 
 .product {
-    background: white;
+    background: #fff;
     padding: 15px;
     border-radius: 8px;
-    text-align: center;
+    width: calc(25% - 20px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 .product-icon {
-    font-size: 36px;
-    color: #28a745;
+    font-size: 40px;
     margin-bottom: 10px;
 }
 
 /* ================= CART ================= */
-#cart-items {
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    margin: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+#cart-items div {
+    padding: 5px 0;
 }
 
 /* ================= PAYMENT ================= */
-#payment {
+.payment-box {
+    background: #fff;
     padding: 20px;
-    background: white;
     border-radius: 8px;
-    margin: 20px;
-    display: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 20px auto;
 }
 
-#payment-status {
-    margin-top: 10px;
-    font-weight: bold;
+.payment-steps {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* ================= CONTACT ================= */
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+#contact-form input, #contact-form textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 /* ================= MODALS ================= */
@@ -146,84 +174,86 @@ nav {
     inset: 0;
     background: rgba(0,0,0,0.5);
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 999;
+    justify-content: center;
+    z-index: 1000;
 }
 
 .modal-content {
-    background: white;
+    background: #fff;
     padding: 20px;
     border-radius: 8px;
-    min-width: 300px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
 }
 
-.modal.hidden {
-    display: none;
-}
-
-/* ================= ADMIN PANEL ================= */
-#admin-panel {
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    margin: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-#admin-orders li, #admin-product-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
 }
 
 /* ================= TOAST ================= */
 .toast {
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 20px;
     background: #28a745;
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    z-index: 1000;
-    animation: slideUp 0.5s ease-out;
-}
-
-@keyframes slideUp {
-    from { transform: translate(-50%, 50px); opacity: 0; }
-    to { transform: translate(-50%, 0); opacity: 1; }
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 2000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* ================= CONFETTI ================= */
 .confetti-piece {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
     top: -10px;
-    z-index: 9999;
-    pointer-events: none;
+    width: 8px;
+    height: 8px;
     opacity: 0.9;
-    animation: fall 3s linear forwards;
+    z-index: 1500;
+    animation-name: confetti-fall;
+    animation-timing-function: linear;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotateZ(360deg);
-        opacity: 0;
-    }
+@keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #333;
+    color: white;
+    margin-top: 20px;
 }
 
 /* ================= RESPONSIVE ================= */
-@media(max-width:768px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
+@media(max-width: 900px) {
+    .product {
+        width: calc(50% - 20px);
+    }
+}
+
+@media(max-width: 600px) {
+    .product {
+        width: 100%;
     }
 
     .site-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
+    }
+
+    nav {
+        flex-wrap: wrap;
     }
 }

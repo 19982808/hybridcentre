@@ -128,35 +128,37 @@ document.addEventListener("DOMContentLoaded", () => {
     contactForm.reset();
     alert("Booking form sent via WhatsApp! ✅");
   });
+/* ===== ADMIN DASHBOARD ===== */
+const adminBtn = document.createElement("button");
+adminBtn.textContent = "Admin Panel";
+adminBtn.style.marginLeft = "10px";
+document.querySelector(".site-header nav").appendChild(adminBtn);
 
-  /* ===== ADMIN DASHBOARD ===== */
-  const adminBtn = document.createElement("button");
-  adminBtn.textContent = "Admin Panel";
-  adminBtn.style.marginLeft = "10px";
-  document.querySelector(".site-header nav").appendChild(adminBtn);
+// Create hidden modal
+const adminModal = document.createElement("div");
+adminModal.classList.add("modal", "hidden"); // hidden by default
+adminModal.innerHTML = `
+  <div class="modal-content">
+    <span class="close" id="closeAdmin">&times;</span>
+    <h2>Admin Dashboard</h2>
+    <form id="add-product-form">
+      <input type="text" id="p_name" placeholder="Product Name" required>
+      <input type="number" id="p_price" placeholder="Price" required>
+      <input type="text" id="p_icon" placeholder="FontAwesome Icon Class" required>
+      <button type="submit">Add Product</button>
+    </form>
+    <h3>All Products</h3>
+    <ul id="admin-product-list"></ul>
+    <h3>Cart Items</h3>
+    <ul id="admin-cart-list"></ul>
+  </div>
+`;
+document.body.appendChild(adminModal);
 
-  const adminModal = document.createElement("div");
-  adminModal.classList.add("modal", "hidden");
-  adminModal.innerHTML = `
-    <div class="modal-content">
-      <span class="close" id="closeAdmin">&times;</span>
-      <h2>Admin Dashboard</h2>
-      <form id="add-product-form">
-        <input type="text" id="p_name" placeholder="Product Name" required>
-        <input type="number" id="p_price" placeholder="Price" required>
-        <input type="text" id="p_icon" placeholder="FontAwesome Icon Class" required>
-        <button type="submit">Add Product</button>
-      </form>
-      <h3>All Products</h3>
-      <ul id="admin-product-list"></ul>
-      <h3>Cart Items</h3>
-      <ul id="admin-cart-list"></ul>
-    </div>
-  `;
-  document.body.appendChild(adminModal);
+// Open/Close
+adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
+document.getElementById("closeAdmin").addEventListener("click", () => adminModal.classList.add("hidden"));
 
-  adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
-  document.getElementById("closeAdmin").addEventListener("click", () => adminModal.classList.add("hidden"));
 
   const addProductForm = document.getElementById("add-product-form");
   addProductForm.addEventListener("submit", e => {
@@ -197,3 +199,4 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAdminProducts();
   renderAdminCart();
 });
+

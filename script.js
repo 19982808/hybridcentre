@@ -116,6 +116,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateCart();
   renderProducts();
+/* ================= PAYMENT ================= */
+const paidBtn = document.getElementById("paidBtn");
+const paymentModal = document.getElementById("paymentModal");
+
+if (paidBtn) {
+  paidBtn.onclick = () => {
+    if (!cartItems.length) {
+      alert("Your cart is empty");
+      return;
+    }
+    paymentModal.classList.remove("hidden");
+  };
+}
+
+function closePayment() {
+  paymentModal.classList.add("hidden");
+}
+
+document.getElementById("submitPayment").onclick = () => {
+  const code = document.getElementById("mpesaCode").value.trim();
+  if (code.length < 8) {
+    alert("Enter a valid M-Pesa code");
+    return;
+  }
+
+  const order = {
+    items: cartItems,
+    mpesaCode: code,
+    status: "Pending Verification",
+    date: new Date().toLocaleString()
+  };
+
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(order);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  cartItems = [];
+  localStorage.removeItem("cartItems");
+  updateCart();
+
+  paymentModal.classList.add("hidden");
+  alert("Payment submitted successfully!");
+};
 
   /* ================= LOGIN / REGISTER ================= */
   const loginModal = document.getElementById("loginModal");
@@ -223,3 +266,4 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => t.remove(), 3000);
   }
 });
+

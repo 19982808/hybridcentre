@@ -1,28 +1,29 @@
 /* ================= GENERAL STYLES ================= */
-* {
-  box-sizing: border-box;
+body {
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
   color: #333;
-  line-height: 1.6;
 }
 
 .hidden-section {
   display: none;
 }
 
-a {
-  text-decoration: none;
-  color: #007bff;
+button {
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
-a:hover {
-  color: #0056b3;
+button:hover {
+  background-color: #218838;
 }
 
 /* ================= HEADER ================= */
@@ -30,8 +31,8 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #222;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
   color: white;
   flex-wrap: wrap;
 }
@@ -42,171 +43,144 @@ a:hover {
   gap: 10px;
 }
 
-.site-header .logo {
-  width: 50px;
+.site-header .logo-container img.logo {
   height: 50px;
-  object-fit: cover;
 }
 
-.site-header nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.site-header nav a,
+.site-header nav a, 
 .site-header nav button {
+  margin-left: 10px;
   color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: background 0.3s;
+  text-decoration: none;
 }
 
-.site-header nav a:hover,
-.site-header nav button:hover {
-  background-color: #444;
+.site-header nav button.admin-btn {
+  background-color: #007bff;
+}
+
+.site-header nav button.admin-btn:hover {
+  background-color: #0056b3;
 }
 
 /* ================= HERO ================= */
 .hero {
-  background: url('hero1.png') no-repeat center center/cover;
+  position: relative;
   height: 400px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   color: white;
-  position: relative;
+  text-align: center;
+  background-color: #333;
+  overflow: hidden;
 }
 
-.hero::after {
-  content: "";
+.slideshow {
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
-.hero h1 {
+.hero-content h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
 }
 
-.hero p {
+.hero-content p {
   font-size: 1.2rem;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
-.cta-btn {
-  padding: 10px 20px;
-  background-color: #28a745;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.cta-btn:hover {
-  background-color: #218838;
+.hero-content button {
+  font-size: 1rem;
 }
 
 /* ================= SECTIONS ================= */
 section {
   padding: 40px 20px;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: auto;
 }
 
-section h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
+h2 {
   text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
 }
 
 /* ================= PRODUCTS ================= */
-.product-grid {
+#product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .product {
   background-color: white;
+  border-radius: 8px;
   padding: 15px;
-  border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.product:hover {
-  transform: translateY(-5px);
-}
-
-.product i {
+.product-icon {
   font-size: 2rem;
   margin-bottom: 10px;
   color: #28a745;
 }
 
-.product h3 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
-
-.product p {
-  margin-bottom: 10px;
-}
-
 /* ================= CART ================= */
 #cart-items div {
-  margin-bottom: 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
 }
 
-/* ================= PAYMENT ================= */
-#payment p {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* ================= CONTACT & BOOK SERVICE ================= */
-form {
+/* ================= CONTACT ================= */
+#contact-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-  margin: 20px auto;
+  gap: 15px;
+  max-width: 500px;
+  margin: auto;
 }
 
-form input,
-form textarea {
+#contact-form input, #contact-form textarea {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  resize: none;
+  width: 100%;
+  resize: vertical;
 }
 
-form button {
-  align-self: center;
-}
-
-/* ================= ADMIN MODAL ================= */
+/* ================= MODALS ================= */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -215,54 +189,48 @@ form button {
 
 .modal-content {
   background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  width: 90%;
+  padding: 25px;
+  border-radius: 8px;
   max-width: 500px;
+  width: 90%;
   position: relative;
 }
 
 .modal-content h2 {
-  margin-bottom: 20px;
+  margin-top: 0;
 }
 
-.modal-content form {
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ================= ADMIN DASHBOARD ================= */
+#add-product-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
-.modal-content input,
-.modal-content button {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+#admin-product-list, #admin-cart-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 5px 0;
 }
 
-.modal-content button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.modal-content button:hover {
-  background-color: #218838;
-}
-
-.close {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  font-size: 1.5rem;
-  cursor: pointer;
+#admin-product-list li, #admin-cart-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
 }
 
 /* ================= FOOTER ================= */
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #222;
+  background-color: #1a1a1a;
   color: white;
-  margin-top: 20px;
 }

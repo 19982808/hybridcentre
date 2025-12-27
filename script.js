@@ -10,7 +10,7 @@ let products = [
   { name: "Cooling Systems", price: 200, icon: "fa-fan" },
   { name: "Suspension Parts", price: 250, icon: "fa-car-side" },
   { name: "Gearbox & Transmission", price: 600, icon: "fa-gears" },
-  { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" },
+  { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" }
 ];
 let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -21,30 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ================= HERO SLIDER ================= */
   const slides = document.querySelectorAll(".slide");
-  const dotsContainer = document.querySelector(".dots");
   let currentSlide = 0;
-
-  // Preload images
-  slides.forEach(slide => {
-    const img = new Image();
-    img.src = slide.style.backgroundImage.slice(5, -2);
-  });
-
-  // Create dots
-  slides.forEach((_, i) => {
-    const dot = document.createElement("span");
-    dot.className = "dot" + (i === 0 ? " active" : "");
-    dot.onclick = () => showSlide(i);
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = document.querySelectorAll(".dot");
 
   function showSlide(index) {
     slides.forEach(s => s.classList.remove("active"));
-    dots.forEach(d => d.classList.remove("active"));
     slides[index].classList.add("active");
-    dots[index].classList.add("active");
     currentSlide = index;
   }
 
@@ -69,15 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
       showSection(link.getAttribute("href"));
     };
   });
-
   showSection("#home");
 
   /* ================= PRODUCTS ================= */
+  const productList = document.getElementById("product-list");
   function renderProducts() {
-    const list = document.getElementById("product-list");
-    if (!list) return;
-    list.innerHTML = "";
-
+    productList.innerHTML = "";
     products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
@@ -92,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         saveCart();
         toast("Added to cart ✅");
       };
-      list.appendChild(div);
+      productList.appendChild(div);
     });
   }
 
@@ -105,8 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateCart() {
     const cart = document.getElementById("cart-items");
     const count = document.getElementById("cart-count");
-    if (!cart) return;
-
     cart.innerHTML = "";
     count.textContent = cartItems.length;
 
@@ -116,21 +92,20 @@ document.addEventListener("DOMContentLoaded", () => {
       cart.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
     });
 
-    if (cartItems.length) {
-      cart.innerHTML += `<strong>Total: KES ${total}</strong>`;
-    }
+    if (cartItems.length) cart.innerHTML += `<strong>Total: KES ${total}</strong>`;
   }
 
-  updateCart();
   renderProducts();
+  updateCart();
 
-  /* ================= CHECKOUT + PAYMENT ================= */
-  document.getElementById("checkoutBtn")?.addEventListener("click", () => {
+  /* ================= CHECKOUT & PAYMENT ================= */
+  document.getElementById("checkoutBtn").onclick = () => {
     if (!cartItems.length) return alert("Your cart is empty ❌");
 
-    const totalAmount = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
+    const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
+    const phone = prompt("Enter WhatsApp number for order (2547XXXXXXX)");
+    if (!phone) return;
 
-    // simulate M-Pesa code
     const mpesaCode = "MP" + Math.floor(Math.random() * 1000000);
 
     const order = {
@@ -138,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       items: cartItems,
       mpesaCode,
       status: "Paid",
-      amount: totalAmount,
+      amount: total,
       date: new Date().toLocaleString()
     };
 
@@ -146,38 +121,54 @@ document.addEventListener("DOMContentLoaded", () => {
     orders.push(order);
     localStorage.setItem("orders", JSON.stringify(orders));
 
-    // WhatsApp message
-    let phone = localStorage.getItem("userPhone") || prompt("Enter your WhatsApp number (2547XXXXXXXX):");
-    if (!phone) return;
-    localStorage.setItem("userPhone", phone);
-
     let message = `🛒 *Order #${order.id}*\n\n`;
     order.items.forEach(item => message += `• ${item.name} - KES ${item.price}\n`);
-    message += `\n*Total:* KES ${order.amount}\nM-Pesa Ref: ${order.mpesaCode}\nThank you for your order!`;
+    message += `\n*Total:* KES ${order.amount}\nM-Pesa Ref: ${order.mpesaCode}\nThank you!`;
+
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
 
     cartItems = [];
-    localStorage.removeItem("cartItems");
-    updateCart();
-    toast("Payment successful & WhatsApp order sent! ✅");
-  });
+    saveCart();
+    toast("Payment done & WhatsApp sent! ✅");
+  };
 
-  /* ================= LOGIN MODAL ================= */
+  /* ================= LOGIN / REGISTER ================= */
   const loginModal = document.getElementById("loginModal");
+  const registerModal = document.getElementById("registerModal");
   const loginBtn = document.getElementById("loginBtn");
-  const closeLogin = document.getElementById("closeLogin");
+  const registerBtn = document.getElementById("registerBtn");
+
+  function closeModal(modal) { modal.classList.add("hidden"); }
 
   loginBtn.onclick = () => loginModal.classList.remove("hidden");
-  closeLogin.onclick = () => loginModal.classList.add("hidden");
+  registerBtn.onclick = () => registerModal.classList.remove("hidden");
 
-  document.getElementById("login-submit")?.addEventListener("click", () => {
+  loginModal.querySelector(".close").onclick = () => closeModal(loginModal);
+  registerModal.querySelector(".close").onclick = () => closeModal(registerModal);
+
+  document.getElementById("login-submit").onclick = () => {
+    const email = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    if (!email || !password) return alert("Enter email and password");
     isLoggedIn = true;
     localStorage.setItem("isLoggedIn", "true");
-    loginModal.classList.add("hidden");
-    toast("Logged in successfully ✅");
-  });
+    closeModal(loginModal);
+    toast("Logged in ✅");
+  };
 
-  /* ================= BOOK SERVICE ================= */
+  document.getElementById("register-submit").onclick = () => {
+    const username = document.getElementById("register-username").value;
+    const email = document.getElementById("register-email").value;
+    const password = document.getElementById("register-password").value;
+    if (!username || !email || !password) return alert("Fill all fields");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    users.push({ username, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+    closeModal(registerModal);
+    toast("Registered successfully ✅");
+  };
+
+  /* ================= BOOK SERVICE BUTTON ================= */
   const bookBtn = document.getElementById("bookServiceBtn");
   if (bookBtn) bookBtn.onclick = () => showSection("#contact");
 

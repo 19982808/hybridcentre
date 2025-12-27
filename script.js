@@ -3,14 +3,14 @@
 ===================================================== */
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 let products = [
-  { name: "Hybrid Batteries", price: 500, icon: "fa-battery-full" },
-  { name: "Electric Motors", price: 750, icon: "fa-gears" },
-  { name: "Inverters", price: 400, icon: "fa-bolt" },
+  { name: "Hybrid Batteries & Modules", price: 500, icon: "fa-battery-full" },
+  { name: "Electric Motors & Generators", price: 750, icon: "fa-gears" },
+  { name: "Inverters & Power Control Units", price: 400, icon: "fa-bolt" },
   { name: "Engine Components", price: 350, icon: "fa-engine" },
   { name: "Cooling Systems", price: 200, icon: "fa-fan" },
   { name: "Suspension Parts", price: 250, icon: "fa-car-side" },
-  { name: "Gearbox", price: 600, icon: "fa-gears" },
-  { name: "Auxiliary Parts", price: 150, icon: "fa-triangle-exclamation" }
+  { name: "Gearbox & Transmission", price: 600, icon: "fa-gears" },
+  { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" },
 ];
 let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -24,10 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const dotsContainer = document.querySelector(".dots");
   let currentSlide = 0;
 
-  slides.forEach((slide, i) => {
+  // Preload images
+  slides.forEach(slide => {
+    const img = new Image();
+    img.src = slide.style.backgroundImage.slice(5, -2);
+  });
+
+  // Create dots
+  slides.forEach((_, i) => {
     const dot = document.createElement("span");
     dot.className = "dot" + (i === 0 ? " active" : "");
-    dot.addEventListener("click", () => showSlide(i));
+    dot.onclick = () => showSlide(i);
     dotsContainer.appendChild(dot);
   });
 
@@ -41,30 +48,36 @@ document.addEventListener("DOMContentLoaded", () => {
     currentSlide = index;
   }
 
-  setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+  setInterval(() => {
+    showSlide((currentSlide + 1) % slides.length);
+  }, 5000);
+
   showSlide(0);
 
   /* ================= SPA NAVIGATION ================= */
-  const sections = document.querySelectorAll("#home, #products, #cart, #location, #contact");
+  const sections = document.querySelectorAll("#home, #products, #cart, #payment, #location, #contact");
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
-    document.querySelector(id).classList.remove("hidden-section");
+    const target = document.querySelector(id);
+    if (target) target.classList.remove("hidden-section");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   document.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", e => {
+    link.onclick = e => {
       e.preventDefault();
       showSection(link.getAttribute("href"));
-    });
+    };
   });
+
   showSection("#home");
 
   /* ================= PRODUCTS ================= */
-  const productList = document.getElementById("product-list");
-
   function renderProducts() {
-    productList.innerHTML = "";
+    const list = document.getElementById("product-list");
+    if (!list) return;
+    list.innerHTML = "";
+
     products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
@@ -74,58 +87,58 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>Price: KES ${p.price}</p>
         <button class="add-to-cart-btn">Add to Cart</button>
       `;
-      div.querySelector("button").addEventListener("click", () => {
+      div.querySelector("button").onclick = () => {
         cartItems.push(p);
         saveCart();
         toast("Added to cart ✅");
-      });
-      productList.appendChild(div);
+      };
+      list.appendChild(div);
     });
   }
 
-  renderProducts();
-
   /* ================= CART ================= */
-  const cartCount = document.getElementById("cart-count");
-  const cartItemsDiv = document.getElementById("cart-items");
-
   function saveCart() {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     updateCart();
   }
 
   function updateCart() {
-    cartItemsDiv.innerHTML = "";
-    cartCount.textContent = cartItems.length;
+    const cart = document.getElementById("cart-items");
+    const count = document.getElementById("cart-count");
+    if (!cart) return;
+
+    cart.innerHTML = "";
+    count.textContent = cartItems.length;
 
     let total = 0;
     cartItems.forEach(item => {
       total += Number(item.price);
-      cartItemsDiv.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
+      cart.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
     });
 
     if (cartItems.length) {
-      cartItemsDiv.innerHTML += `<strong>Total: KES ${total}</strong>`;
+      cart.innerHTML += `<strong>Total: KES ${total}</strong>`;
     }
   }
 
   updateCart();
+  renderProducts();
 
-  /* ================= CHECKOUT & M-PESA SIM ================= */
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
-    if (!cartItems.length) return alert("Cart is empty ❌");
+  /* ================= CHECKOUT + PAYMENT ================= */
+  document.getElementById("checkoutBtn")?.addEventListener("click", () => {
+    if (!cartItems.length) return alert("Your cart is empty ❌");
 
-    const totalAmount = cartItems.reduce((sum, i) => sum + i.price, 0);
-    const phone = prompt("Enter your WhatsApp number (2547XXXXXXXX):");
-    if (!phone) return;
+    const totalAmount = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
 
+    // simulate M-Pesa code
     const mpesaCode = "MP" + Math.floor(Math.random() * 1000000);
+
     const order = {
       id: Date.now(),
       items: cartItems,
       mpesaCode,
-      amount: totalAmount,
       status: "Paid",
+      amount: totalAmount,
       date: new Date().toLocaleString()
     };
 
@@ -133,15 +146,20 @@ document.addEventListener("DOMContentLoaded", () => {
     orders.push(order);
     localStorage.setItem("orders", JSON.stringify(orders));
 
-    // Send order via WhatsApp
+    // WhatsApp message
+    let phone = localStorage.getItem("userPhone") || prompt("Enter your WhatsApp number (2547XXXXXXXX):");
+    if (!phone) return;
+    localStorage.setItem("userPhone", phone);
+
     let message = `🛒 *Order #${order.id}*\n\n`;
     order.items.forEach(item => message += `• ${item.name} - KES ${item.price}\n`);
     message += `\n*Total:* KES ${order.amount}\nM-Pesa Ref: ${order.mpesaCode}\nThank you for your order!`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
 
     cartItems = [];
-    saveCart();
-    toast("Payment successful & WhatsApp sent! ✅");
+    localStorage.removeItem("cartItems");
+    updateCart();
+    toast("Payment successful & WhatsApp order sent! ✅");
   });
 
   /* ================= LOGIN MODAL ================= */
@@ -149,30 +167,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const closeLogin = document.getElementById("closeLogin");
 
-  loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
-  closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
-  document.getElementById("login-submit").addEventListener("click", () => {
+  loginBtn.onclick = () => loginModal.classList.remove("hidden");
+  closeLogin.onclick = () => loginModal.classList.add("hidden");
+
+  document.getElementById("login-submit")?.addEventListener("click", () => {
     isLoggedIn = true;
     localStorage.setItem("isLoggedIn", "true");
     loginModal.classList.add("hidden");
     toast("Logged in successfully ✅");
   });
 
-  /* ================= REGISTER MODAL ================= */
-  const registerModal = document.getElementById("registerModal");
-  const registerBtn = document.getElementById("registerBtn");
-  const closeRegister = document.getElementById("closeRegister");
-
-  registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
-  closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
-  document.getElementById("register-submit").addEventListener("click", () => {
-    registerModal.classList.add("hidden");
-    toast("Registered successfully ✅");
-  });
-
   /* ================= BOOK SERVICE ================= */
   const bookBtn = document.getElementById("bookServiceBtn");
-  bookBtn?.addEventListener("click", () => showSection("#contact"));
+  if (bookBtn) bookBtn.onclick = () => showSection("#contact");
 
   /* ================= TOAST ================= */
   function toast(msg) {

@@ -148,3 +148,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+// All your sections
+const sections = document.querySelectorAll("section");
+
+// Function to show only one section
+function showSection(id) {
+  sections.forEach(sec => sec.classList.add("hidden-section")); // hide all
+  const target = document.querySelector(id); 
+  if (target) target.classList.remove("hidden-section"); // show clicked
+  window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top
+}
+
+// Add click event to navbar links
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    showSection(link.getAttribute("href"));
+  });
+});
+
+// Optional: Show home on first load
+showSection("#home");

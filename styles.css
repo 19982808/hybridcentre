@@ -226,14 +226,22 @@ button:hover {
 .payment-box {
   max-width: 420px;
   margin: auto;
-  background: #111;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.15);
+  text-align: center;
 }
 
-.payment-box .highlight {
-  color: #00e676;
+.payment-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+#payment-status {
+  margin-top: 15px;
   font-weight: bold;
 }
 
@@ -293,4 +301,5 @@ button:hover {
 section {
     transition: all 0.3s ease-in-out;
 }
+
 

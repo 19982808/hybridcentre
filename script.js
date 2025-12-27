@@ -101,23 +101,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ===== MODALS ===== */
   const loginModal = document.getElementById("loginModal");
-const registerModal = document.getElementById("registerModal");
-const closeLogin = document.getElementById("closeLogin");
-const closeRegister = document.getElementById("closeRegister");
-const loginBtn = document.getElementById("loginBtn");
-const registerBtn = document.getElementById("registerBtn");
+  const registerModal = document.getElementById("registerModal");
+  const closeLogin = document.getElementById("closeLogin");
+  const closeRegister = document.getElementById("closeRegister");
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
 
-// Open modals
-loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
-registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
+  // Open modals
+  loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
+  registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
 
-// Close modals
-closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
-closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
+  // Close modals
+  closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
+  closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
 
+  // Close modals by clicking outside content
+  window.addEventListener("click", e => {
+    if (e.target === loginModal) loginModal.classList.add("hidden");
+    if (e.target === registerModal) registerModal.classList.add("hidden");
+  });
 
   /* ===== LOGIN ===== */
   document.getElementById("login-submit").addEventListener("click", () => {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+
+    if (!username || !password) return alert("Please fill all fields ❌");
+
     isLoggedIn = true;
     localStorage.setItem("isLoggedIn", "true");
     loginModal.classList.add("hidden");
@@ -145,5 +155,14 @@ closeRegister.addEventListener("click", () => registerModal.classList.add("hidde
   const bookServiceBtn = document.getElementById("bookServiceBtn");
   bookServiceBtn.addEventListener("click", () => showSection("#contact"));
 
-});
+  /* ===== CONTACT FORM ===== */
+  document.getElementById("contact-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("contact-name").value;
+    const email = document.getElementById("contact-email").value;
+    const message = document.getElementById("contact-message").value;
+    document.getElementById("contact-status").textContent = `Thank you, ${name}. We received your message!`;
+    document.getElementById("contact-form").reset();
+  });
 
+});

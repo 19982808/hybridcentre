@@ -37,20 +37,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll(".nav-link");
 
     function showSection(id) {
-        sections.forEach(sec => sec.classList.add("hidden-section"));
+        sections.forEach(sec => sec.classList.add("hidden-section")); // Hide all sections
         const target = document.querySelector(id);
-        if (target) target.classList.remove("hidden-section");
+        if (target) target.classList.remove("hidden-section"); // Show the selected section
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     navLinks.forEach(link => {
         link.addEventListener("click", e => {
             e.preventDefault();
-            showSection(link.getAttribute("href"));
+            showSection(link.getAttribute("href")); // Show the section corresponding to the clicked link
         });
     });
 
-    showSection("#home"); // default
+    showSection("#home"); // Default section to display
 
     /* ===== PRODUCTS ===== */
     const productList = document.getElementById("product-list");

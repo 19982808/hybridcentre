@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ================= HERO SLIDER ================= */
   const slides = document.querySelectorAll(".slide");
-  const dotsContainer = document.querySelector(".dots");
+  const dotsContainer = document.createElement("div");
+  dotsContainer.className = "dots";
+  document.querySelector(".hero").appendChild(dotsContainer);
   let currentSlide = 0;
 
   slides.forEach(slide => {
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showSlide(0);
 
   /* ================= SPA NAVIGATION ================= */
-  const sections = document.querySelectorAll("#home, #products, #cart, #location, #contact");
+  const sections = document.querySelectorAll("#home, #products, #cart, #payment, #location, #contact");
 
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
@@ -63,12 +65,27 @@ document.addEventListener("DOMContentLoaded", () => {
   showSection("#home");
 
   /* ================= PRODUCTS ================= */
+  if (products.length === 0) {
+    // default products if localStorage empty
+    products = [
+      { name: "Hybrid Batteries & Modules", price: 500, icon: "fa-battery-full" },
+      { name: "Electric Motors & Generators", price: 750, icon: "fa-gears" },
+      { name: "Inverters & Power Control Units", price: 400, icon: "fa-bolt" },
+      { name: "Engine Components", price: 350, icon: "fa-engine" },
+      { name: "Cooling Systems", price: 200, icon: "fa-fan" },
+      { name: "Suspension Parts", price: 250, icon: "fa-car-side" },
+      { name: "Gearbox & Transmission", price: 600, icon: "fa-gears" },
+      { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" }
+    ];
+    localStorage.setItem("products", JSON.stringify(products));
+  }
+
   function renderProducts() {
     const list = document.getElementById("product-list");
     if (!list) return;
     list.innerHTML = "";
 
-    products.forEach(p => {
+    products.forEach((p, i) => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
@@ -85,6 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
       list.appendChild(div);
     });
   }
+
+  renderProducts();
 
   /* ================= CART ================= */
   function saveCart() {
@@ -112,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateCart();
-  renderProducts();
 
   /* ================= PAYMENT + WHATSAPP ================= */
   function handlePayment(totalAmount) {
@@ -122,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!phone) return;
     localStorage.setItem("userPhone", phone);
 
-    const mpesaCode = "MP" + Math.floor(Math.random() * 1000000); // simulate STK
+    const mpesaCode = "MP" + Math.floor(Math.random() * 1000000);
 
     const order = {
       id: Date.now(),
@@ -150,18 +168,21 @@ document.addEventListener("DOMContentLoaded", () => {
     launchConfetti(40);
   }
 
-  document.getElementById("checkout-btn")?.addEventListener("click", () => {
+  document.getElementById("checkoutBtn")?.addEventListener("click", () => {
     if (!cartItems.length) return alert("Cart is empty ❌");
     const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
     handlePayment(total);
   });
 
-  /* ================= LOGIN ================= */
+  /* ================= LOGIN MODAL ================= */
   const loginModal = document.getElementById("loginModal");
+  const loginBtn = document.getElementById("loginBtn");
+  const closeLogin = loginModal.querySelector(".close");
+
   loginBtn.onclick = () => loginModal.classList.remove("hidden");
   closeLogin.onclick = () => loginModal.classList.add("hidden");
 
-  document.querySelector("#loginModal .submit-btn")?.addEventListener("click", () => {
+  document.getElementById("login-submit")?.addEventListener("click", () => {
     isLoggedIn = true;
     localStorage.setItem("isLoggedIn", "true");
     loginModal.classList.add("hidden");
@@ -177,49 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ================= BOOK SERVICE ================= */
   const bookBtn = document.getElementById("bookServiceBtn");
   if (bookBtn) bookBtn.onclick = () => showSection("#contact");
-
-  /* ================= ADMIN PANEL ================= */
-  adminPanelBtn.onclick = () => adminLoginModal.classList.remove("hidden");
-  adminLoginBtn.onclick = () => {
-    if (adminUsername.value === "admin" && adminPassword.value === "1234") {
-      adminLoginModal.classList.add("hidden");
-      adminPanel.classList.remove("hidden");
-      renderAdminProducts();
-      renderAdminOrders();
-      toast("Admin logged in ✅");
-    } else toast("Invalid admin credentials ❌", false);
-  };
-  logoutAdmin.onclick = () => {
-    adminPanel.classList.add("hidden");
-    toast("Admin logged out ✅");
-  };
-
-  function renderAdminProducts() {
-    const list = document.getElementById("admin-product-list");
-    list.innerHTML = "";
-    products.forEach(p => list.innerHTML += `<li>${p.name} - KES ${p.price}</li>`);
-  }
-
-  function renderAdminOrders() {
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
-    const list = document.getElementById("admin-orders");
-    list.innerHTML = "";
-    orders.forEach(o => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>Order ${o.id}</strong><br>Amount: KES ${o.amount}<br>Ref: ${o.mpesaCode}<br>Status: ${o.status}<hr>`;
-      list.appendChild(li);
-    });
-  }
-
-  document.getElementById("add-product-form-admin")?.addEventListener("submit", e => {
-    e.preventDefault();
-    const product = { name: p_name.value, price: p_price.value, icon: p_icon.value };
-    products.push(product);
-    localStorage.setItem("products", JSON.stringify(products));
-    renderProducts();
-    renderAdminProducts();
-    toast("Product added ✅");
-  });
 
   /* ================= TOAST ================= */
   function toast(msg, success = true) {

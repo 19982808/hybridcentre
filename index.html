@@ -33,76 +33,19 @@
     <div class="slide active" style="background-image:url('hero1.png')"></div>
     <div class="slide" style="background-image:url('hero2.png')"></div>
     <div class="slide" style="background-image:url('hero3.png')"></div>
-    <div class="slide" style="background-image:url('hero4.png')"></div>
   </div>
   <div class="hero-content">
     <h1>Expert Hybrid Vehicle Services</h1>
     <p>Diagnostics • Battery • Hybrid Maintenance</p>
     <button class="cta-btn" id="bookServiceBtn">Book Service</button>
   </div>
+  <div class="dots"></div>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products" class="hidden-section">
   <h2>Our Products</h2>
-  <div id="product-list">
-    <div class="product">
-      <i class="fa-solid fa-battery-full product-icon"></i>
-      <h3>Hybrid Batteries & Modules</h3>
-      <p>High-quality battery packs compatible with hybrid vehicles.</p>
-      <p>Price: $500</p>
-      <button class="add-to-cart-btn" data-name="Hybrid Batteries & Modules" data-price="500">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-gears product-icon"></i>
-      <h3>Electric Motors & Generators</h3>
-      <p>Reliable motors and motor-generators.</p>
-      <p>Price: $750</p>
-      <button class="add-to-cart-btn" data-name="Electric Motors & Generators" data-price="750">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-bolt product-icon"></i>
-      <h3>Inverters & Power Control Units</h3>
-      <p>Efficient energy management components.</p>
-      <p>Price: $400</p>
-      <button class="add-to-cart-btn" data-name="Inverters & Power Control Units" data-price="400">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-engine product-icon"></i>
-      <h3>Engine Components</h3>
-      <p>Spark plugs, filters, pistons, and exhaust parts.</p>
-      <p>Price: $350</p>
-      <button class="add-to-cart-btn" data-name="Engine Components" data-price="350">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-fan product-icon"></i>
-      <h3>Cooling Systems</h3>
-      <p>Cooling fans, pumps & thermal components.</p>
-      <p>Price: $200</p>
-      <button class="add-to-cart-btn" data-name="Cooling Systems" data-price="200">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-car-side product-icon"></i>
-      <h3>Suspension Parts</h3>
-      <p>Shocks, struts, and springs.</p>
-      <p>Price: $250</p>
-      <button class="add-to-cart-btn" data-name="Suspension Parts" data-price="250">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-gears product-icon"></i>
-      <h3>Gearbox & Transmission</h3>
-      <p>Automatic & CVT gearboxes.</p>
-      <p>Price: $600</p>
-      <button class="add-to-cart-btn" data-name="Gearbox & Transmission" data-price="600">Buy Now</button>
-    </div>
-    <div class="product">
-      <i class="fa-solid fa-triangle-exclamation product-icon"></i>
-      <h3>Auxiliary & Safety Parts</h3>
-      <p>High-voltage cables and safety components.</p>
-      <p>Price: $150</p>
-      <button class="add-to-cart-btn" data-name="Auxiliary & Safety Parts" data-price="150">Buy Now</button>
-    </div>
-  </div>
+  <div id="product-list"></div> <!-- Products will be rendered by JS -->
 </section>
 
 <!-- CART -->
@@ -120,14 +63,6 @@
     <p><strong>Paybill Number:</strong> <span class="highlight">222111</span></p>
     <p><strong>Account Number:</strong> <span class="highlight">5825469</span></p>
     <p><strong>Business Name:</strong> HYBRID CENTRE</p>
-    <ol class="payment-steps">
-      <li>Go to <strong>M-Pesa</strong> on your phone</li>
-      <li>Select <strong>Lipa na M-Pesa</strong></li>
-      <li>Choose <strong>Paybill</strong></li>
-      <li>Enter Paybill <strong>222111</strong></li>
-      <li>Enter Account <strong>5825469</strong></li>
-      <li>Enter amount & confirm</li>
-    </ol>
     <button id="paidBtn" class="cta-btn">I Have Paid</button>
   </div>
 </section>
@@ -138,8 +73,7 @@
   <p>Naivasha Road, Dagoretti Corner, next to Shell Petrol Station</p>
   <iframe
     src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
-    width="100%" height="300" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
+    width="100%" height="300" style="border:0;" loading="lazy"></iframe>
 </section>
 
 <!-- CONTACT -->
@@ -159,33 +93,23 @@
 <!-- LOGIN MODAL -->
 <div id="loginModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close" id="closeLogin">&times;</span>
     <h2>Login</h2>
     <input type="text" id="login-username" placeholder="Username" required>
     <input type="password" id="login-password" placeholder="Password" required>
-    <button id="login-submit">Login</button>
+    <button class="submit-btn" id="login-submit">Login</button>
   </div>
 </div>
 
 <!-- REGISTER MODAL -->
 <div id="registerModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close" id="closeRegister">&times;</span>
     <h2>Register</h2>
     <input type="text" id="register-username" placeholder="Username" required>
     <input type="email" id="register-email" placeholder="Email" required>
     <input type="password" id="register-password" placeholder="Password" required>
-    <button id="register-submit">Register</button>
-  </div>
-</div>
-
-<!-- M-PESA PAYMENT MODAL -->
-<div id="paymentModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" onclick="closePayment()">&times;</span>
-    <h3>Confirm M-Pesa Payment</h3>
-    <input type="text" id="mpesaCode" placeholder="M-Pesa Code (e.g. QJD7X2K9)" />
-    <button id="submitPayment" class="submit-btn">Submit Payment</button>
+    <button class="submit-btn" id="register-submit">Register</button>
   </div>
 </div>
 

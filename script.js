@@ -101,16 +101,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ===== MODALS ===== */
   const loginModal = document.getElementById("loginModal");
-  const registerModal = document.getElementById("registerModal");
-  const loginBtn = document.getElementById("loginBtn");
-  const registerBtn = document.getElementById("registerBtn");
-  const closeLogin = document.getElementById("closeLogin");
-  const closeRegister = document.getElementById("closeRegister");
+const registerModal = document.getElementById("registerModal");
+const closeLogin = document.getElementById("closeLogin");
+const closeRegister = document.getElementById("closeRegister");
+const loginBtn = document.getElementById("loginBtn");
+const registerBtn = document.getElementById("registerBtn");
 
-  loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
-  registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
-  closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
-  closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
+// Open modals
+loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
+registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
+
+// Close modals
+closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
+closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
+
 
   /* ===== LOGIN ===== */
   document.getElementById("login-submit").addEventListener("click", () => {
@@ -142,3 +146,4 @@ document.addEventListener("DOMContentLoaded", () => {
   bookServiceBtn.addEventListener("click", () => showSection("#contact"));
 
 });
+

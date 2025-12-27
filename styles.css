@@ -7,23 +7,22 @@
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
   color: #333;
   line-height: 1.6;
 }
 
-h1, h2, h3 {
-  color: #222;
-  margin-bottom: 15px;
+.hidden-section {
+  display: none;
 }
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: #007bff;
 }
 
-ul {
-  list-style: none;
+a:hover {
+  color: #0056b3;
 }
 
 /* ================= HEADER ================= */
@@ -31,7 +30,7 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 10px 20px;
   background-color: #222;
   color: white;
   flex-wrap: wrap;
@@ -46,99 +45,73 @@ ul {
 .site-header .logo {
   width: 50px;
   height: 50px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
-nav {
+.site-header nav {
   display: flex;
   align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
+  gap: 10px;
 }
 
-nav a {
-  padding: 8px 15px;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-
-nav a:hover {
-  background-color: #28a745;
+.site-header nav a,
+.site-header nav button {
   color: white;
-}
-
-nav button {
-  padding: 8px 15px;
+  background: none;
   border: none;
-  border-radius: 5px;
-  background-color: #ffc107;
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
   transition: background 0.3s;
 }
 
-nav button:hover {
-  background-color: #e0a800;
-}
-
-/* ================= SECTION ================= */
-.section {
-  display: none;
-  padding: 50px 20px;
-  max-width: 1100px;
-  margin: auto;
-  background: white;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
-.active-section {
-  display: block;
+.site-header nav a:hover,
+.site-header nav button:hover {
+  background-color: #444;
 }
 
 /* ================= HERO ================= */
 .hero {
-  position: relative;
+  background: url('hero1.png') no-repeat center center/cover;
   height: 400px;
-  overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
-.slideshow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
   position: relative;
-  width: 100%;
-  height: 100%;
 }
 
-.slide {
+.hero::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 0.7s ease-in-out;
-}
-
-.slide.active {
-  opacity: 1;
+  background: rgba(0,0,0,0.5);
 }
 
 .hero-content {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  color: white;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 .cta-btn {
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
   background-color: #28a745;
+  border: none;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
+  border-radius: 5px;
+  font-weight: bold;
   transition: background 0.3s;
 }
 
@@ -146,52 +119,94 @@ nav button:hover {
   background-color: #218838;
 }
 
+/* ================= SECTIONS ================= */
+section {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 /* ================= PRODUCTS ================= */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
 .product {
-  background: #f9f9f9;
+  background-color: white;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
-.product-icon {
-  font-size: 40px;
+.product:hover {
+  transform: translateY(-5px);
+}
+
+.product i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #28a745;
+}
+
+.product h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.product p {
   margin-bottom: 10px;
 }
 
 /* ================= CART ================= */
 #cart-items div {
-  padding: 5px 0;
+  margin-bottom: 5px;
 }
 
-/* ================= FORMS ================= */
-input, textarea {
-  width: 100%;
+/* ================= PAYMENT ================= */
+#payment p {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* ================= CONTACT & BOOK SERVICE ================= */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+form input,
+form textarea {
   padding: 10px;
-  margin: 8px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
+  resize: none;
 }
 
-button[type="submit"] {
-  width: 100%;
+form button {
+  align-self: center;
 }
 
-/* ================= MODALS ================= */
+/* ================= ADMIN MODAL ================= */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,19 +214,47 @@ button[type="submit"] {
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
   width: 90%;
   max-width: 500px;
   position: relative;
 }
 
-.modal .close {
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content input,
+.modal-content button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.modal-content button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  background-color: #218838;
+}
+
+.close {
   position: absolute;
-  top: 10px;
   right: 15px;
-  font-size: 24px;
+  top: 15px;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
@@ -219,20 +262,7 @@ button[type="submit"] {
 footer {
   text-align: center;
   padding: 20px;
-  background: #222;
+  background-color: #222;
   color: white;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .hero-content {
-    position: static;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  nav {
-    flex-direction: column;
-    gap: 10px;
-  }
+  margin-top: 20px;
 }

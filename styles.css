@@ -1,293 +1,238 @@
 /* ================= GENERAL STYLES ================= */
-body {
-    font-family: 'Poppins', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-    color: #333;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
-.hidden-section {
-    display: none;
+body {
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
 }
 
 h1, h2, h3 {
-    margin: 0 0 10px 0;
+  color: #222;
+  margin-bottom: 15px;
 }
 
-p {
-    margin: 0 0 15px 0;
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
 }
 
 /* ================= HEADER ================= */
 .site-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #1f1f1f;
-    color: white;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #222;
+  color: white;
+  flex-wrap: wrap;
 }
 
 .site-header .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .site-header .logo {
-    height: 50px;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
 
-.site-header nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.site-header nav a, 
-.site-header nav button {
-    color: white;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
+nav a {
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
-.site-header nav a:hover,
-.site-header nav button:hover {
-    background-color: #28a745;
+nav a:hover {
+  background-color: #28a745;
+  color: white;
 }
 
-/* ================= HERO SECTION ================= */
+nav button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffc107;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+nav button:hover {
+  background-color: #e0a800;
+}
+
+/* ================= SECTION ================= */
+.section {
+  display: none;
+  padding: 50px 20px;
+  max-width: 1100px;
+  margin: auto;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.active-section {
+  display: block;
+}
+
+/* ================= HERO ================= */
 .hero {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    background: #000;
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 30px;
 }
 
 .slideshow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
 }
 
 .slide.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 10;
-}
-
-.hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.7);
 }
 
 .cta-btn {
-    padding: 10px 20px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
 }
 
 .cta-btn:hover {
-    background-color: #218838;
-}
-
-/* ================= SECTIONS ================= */
-section {
-    padding: 50px 20px;
-    background-color: #fff;
-    min-height: 70vh;
-}
-
-section h2 {
-    margin-bottom: 20px;
-    text-align: center;
+  background-color: #218838;
 }
 
 /* ================= PRODUCTS ================= */
-#product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
 }
 
 .product {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-}
-
-.product:hover {
-    transform: translateY(-5px);
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .product-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.add-to-cart-btn {
-    margin-top: 10px;
-    padding: 8px 15px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #218838;
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
 /* ================= CART ================= */
 #cart-items div {
-    margin-bottom: 8px;
-}
-
-#checkoutBtn {
-    padding: 10px 20px;
-    background-color: #17a2b8;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#checkoutBtn:hover {
-    background-color: #117a8b;
+  padding: 5px 0;
 }
 
 /* ================= FORMS ================= */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
 input, textarea {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    width: 100%;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #218838;
+  width: 100%;
 }
 
 /* ================= MODALS ================= */
 .modal {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2000;
-    opacity: 1;
-    transition: all 0.3s;
-}
-
-.modal.hidden {
-    display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
 }
 
-.modal-content .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* ================= ADMIN PANEL ================= */
-#adminPanel {
-    display: none;
-    background-color: #f0f0f0;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-#adminPanel h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.admin-product-list li,
-.admin-orders li {
-    margin-bottom: 10px;
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 /* ================= FOOTER ================= */
 footer {
-    background-color: #1f1f1f;
-    color: white;
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .hero-content {
+    position: static;
     text-align: center;
-    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

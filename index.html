@@ -18,17 +18,15 @@
   <nav>
     <a href="#home" class="nav-link">Home</a>
     <a href="#products" class="nav-link">Products</a>
-    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#cart" class="nav-link">Cart</a>
     <a href="#payment" class="nav-link">Payment</a>
     <a href="#location" class="nav-link">Location</a>
     <a href="#contact" class="nav-link">Contact</a>
-    <button id="loginBtn">Login</button>
-    <button id="registerBtn">Register</button>
   </nav>
 </header>
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section id="home">
   <div class="slideshow">
     <div class="slide active" style="background-image:url('hero1.png')"></div>
     <div class="slide" style="background-image:url('hero2.png')"></div>
@@ -37,41 +35,41 @@
   <div class="hero-content">
     <h1>Expert Hybrid Vehicle Services</h1>
     <p>Diagnostics • Battery • Hybrid Maintenance</p>
-    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
+    <a href="#contact"><button class="cta-btn">Book Service</button></a>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section id="products" class="hidden-section">
+<section id="products">
   <h2>Our Products</h2>
   <div id="product-list"></div>
 </section>
 
 <!-- CART -->
-<section id="cart" class="hidden-section">
+<section id="cart">
   <h2>Your Cart</h2>
   <div id="cart-items"></div>
   <button id="checkoutBtn">Checkout</button>
 </section>
 
 <!-- PAYMENT -->
-<section id="payment" class="hidden-section">
+<section id="payment">
   <h2>Complete Payment</h2>
   <p>Pay using M-Pesa or WhatsApp order</p>
 </section>
 
 <!-- LOCATION -->
-<section id="location" class="hidden-section">
+<section id="location">
   <h2>Our Location</h2>
   <p>Naivasha Road, Dagoretti Corner, next to Shell Petrol Station</p>
   <iframe
     src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
-    width="100%" height="300" style="border:0;" loading="lazy">
+    width="100%" height="300" style="border:0;">
   </iframe>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="hidden-section">
+<section id="contact">
   <h2>Contact Us</h2>
   <form id="contact-form">
     <input type="text" id="contact-name" placeholder="Your Name" required>
@@ -79,31 +77,22 @@
     <textarea id="contact-message" placeholder="Your Message" required></textarea>
     <button type="submit">Send Message</button>
   </form>
-  <p id="contact-status"></p>
-</section>
 
-<!-- LOGIN MODAL -->
-<div id="loginModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" id="closeLogin">&times;</span>
-    <h2>Login</h2>
-    <input type="text" id="login-username" placeholder="Email" required>
-    <input type="password" id="login-password" placeholder="Password" required>
-    <button id="login-submit">Login</button>
-  </div>
-</div>
-
-<!-- REGISTER MODAL -->
-<div id="registerModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" id="closeRegister">&times;</span>
-    <h2>Register</h2>
+  <h2>Register</h2>
+  <form id="register-form">
     <input type="text" id="register-username" placeholder="Username" required>
     <input type="email" id="register-email" placeholder="Email" required>
     <input type="password" id="register-password" placeholder="Password" required>
-    <button id="register-submit">Register</button>
-  </div>
-</div>
+    <button type="submit">Register</button>
+  </form>
+
+  <h2>Login</h2>
+  <form id="login-form">
+    <input type="email" id="login-email" placeholder="Email" required>
+    <input type="password" id="login-password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+</section>
 
 <footer>
   <p>&copy; 2025 Hybrid Service Centre. All rights reserved.</p>

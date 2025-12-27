@@ -110,6 +110,31 @@
   <div id="cart-items"></div>
   <button id="checkoutBtn">Checkout</button>
 </section>
+<!-- ================= PAYMENT ================= -->
+<section id="payment" class="hidden-section">
+  <h2>Complete Payment</h2>
+
+  <div class="payment-box">
+    <h3>M-Pesa Payment</h3>
+
+    <p><strong>Paybill Number:</strong> <span class="highlight">222111</span></p>
+    <p><strong>Account Number:</strong> <span class="highlight">5825469</span></p>
+    <p><strong>Business Name:</strong> HYBRID CENTRE</p>
+
+    <ol class="payment-steps">
+      <li>Go to <strong>M-Pesa</strong> on your phone</li>
+      <li>Select <strong>Lipa na M-Pesa</strong></li>
+      <li>Choose <strong>Paybill</strong></li>
+      <li>Enter Paybill <strong>222111</strong></li>
+      <li>Enter Account <strong>5825469</strong></li>
+      <li>Enter amount & confirm</li>
+    </ol>
+
+    <button id="paidBtn" class="cta-btn">
+      I Have Paid
+    </button>
+  </div>
+</section>
 
 <!-- LOCATION -->
 <section id="location" class="hidden-section">
@@ -140,6 +165,8 @@
   </form>
   <p id="contact-status"></p>
 </section>
+
+
 
 <!-- LOGIN MODAL -->
 <div id="loginModal" class="modal hidden">
@@ -174,8 +201,20 @@
 </footer>
 
 <script src="script.js"></script>
+  <div id="paymentModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closePayment()">&times;</span>
+
+    <h3>Confirm M-Pesa Payment</h3>
+
+    <input type="text" id="mpesaCode" placeholder="M-Pesa Code (e.g. QJD7X2K9)" />
+    <button id="submitPayment" class="submit-btn">Submit Payment</button>
+  </div>
+</div>
+
 </body>
 </html>
+
 
 
 

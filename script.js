@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ================= SPA NAVIGATION ================= */
   const sections = document.querySelectorAll("#home, #products, #cart, #payment, #location, #contact");
+
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
     const target = document.querySelector(id);
@@ -50,149 +51,108 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSection("#home");
 
-  /* ================= PRODUCTS ================= */
+  /* ================= RENDER PRODUCTS ================= */
+  const productList = document.getElementById("product-list");
   function renderProducts() {
-    const list = document.getElementById("product-list");
-    list.innerHTML = "";
+    productList.innerHTML = "";
     products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
         <i class="fa-solid ${p.icon} product-icon"></i>
         <h3>${p.name}</h3>
-        <p>Price: $${p.price}</p>
+        <p>Price: KES ${p.price}</p>
         <button class="add-to-cart-btn">Add to Cart</button>
       `;
       div.querySelector("button").onclick = () => {
         cartItems.push(p);
-        saveCart();
-        toast("Added to cart ✅");
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        updateCart();
+        alert(`${p.name} added to cart ✅`);
       };
-      list.appendChild(div);
+      productList.appendChild(div);
     });
-  }
-
-  /* ================= CART ================= */
-  function saveCart() {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    updateCart();
-  }
-
-  function updateCart() {
-    const cart = document.getElementById("cart-items");
-    const count = document.getElementById("cart-count");
-    cart.innerHTML = "";
-    count.textContent = cartItems.length;
-    let total = 0;
-    cartItems.forEach(item => {
-      total += Number(item.price);
-      cart.innerHTML += `<div>${item.name} - $${item.price}</div>`;
-    });
-    if (cartItems.length) {
-      cart.innerHTML += `<strong>Total: $${total}</strong>`;
-    }
   }
 
   renderProducts();
+
+  /* ================= CART ================= */
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartCount = document.getElementById("cart-count");
+
+  function updateCart() {
+    cartItemsContainer.innerHTML = "";
+    cartCount.textContent = cartItems.length;
+    let total = 0;
+    cartItems.forEach(item => {
+      total += item.price;
+      cartItemsContainer.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
+    });
+    if (cartItems.length > 0) {
+      cartItemsContainer.innerHTML += `<strong>Total: KES ${total}</strong>`;
+    }
+  }
+
   updateCart();
 
-  /* ================= CHECKOUT ================= */
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
-    if (!cartItems.length) {
-      alert("Your cart is empty!");
-      return;
-    }
-    const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
-    const phone = prompt("Enter your WhatsApp number (2547XXXXXXXX):");
-    if (!phone) return;
-    const mpesaCode = "MP" + Math.floor(Math.random() * 1000000);
-    const order = { id: Date.now(), items: cartItems, mpesaCode, status: "Paid", amount: total, date: new Date().toLocaleString() };
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
-    orders.push(order);
-    localStorage.setItem("orders", JSON.stringify(orders));
+  document.getElementById("checkoutBtn").onclick = () => {
+    if (!cartItems.length) return alert("Cart is empty ❌");
+    alert("Proceeding to payment...");
+  };
 
-    // WhatsApp message
-    let message = `🛒 *Order #${order.id}*\n\n`;
-    order.items.forEach(item => message += `• ${item.name} - $${item.price}\n`);
-    message += `\n*Total:* $${order.amount}\nM-Pesa Ref: ${order.mpesaCode}\nThank you for your order!`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-
-    cartItems = [];
-    saveCart();
-    toast("Payment successful & WhatsApp order sent! ✅");
-  });
-
-  /* ================= MODALS ================= */
-  const loginModal = document.getElementById("loginModal");
-  const registerModal = document.getElementById("registerModal");
-
-  document.getElementById("loginBtn").onclick = () => loginModal.classList.remove("hidden");
-  document.getElementById("registerBtn").onclick = () => registerModal.classList.remove("hidden");
-
-  loginModal.querySelector(".close").onclick = () => loginModal.classList.add("hidden");
-  registerModal.querySelector(".close").onclick = () => registerModal.classList.add("hidden");
-
-  /* ================= LOGIN ================= */
-  document.getElementById("login-submit").addEventListener("click", (e) => {
-    e.preventDefault();
-    isLoggedIn = true;
-    localStorage.setItem("isLoggedIn", "true");
-    loginModal.classList.add("hidden");
-    toast("Login successful ✅");
-  });
-   /* ================= REGISTER ================= */
-document.addEventListener("DOMContentLoaded", () => {
+  /* ================= REGISTER MODAL ================= */
   const registerBtn = document.getElementById("registerBtn");
   const registerModal = document.getElementById("registerModal");
   const closeRegister = document.getElementById("closeRegister");
   const registerSubmit = document.getElementById("register-submit");
 
-  // Open modal
   registerBtn.onclick = () => registerModal.classList.remove("hidden");
-
-  // Close modal when clicking X
   closeRegister.onclick = () => registerModal.classList.add("hidden");
 
-  // Submit registration
   registerSubmit.onclick = () => {
     const username = document.getElementById("register-username").value.trim();
     const email = document.getElementById("register-email").value.trim();
     const password = document.getElementById("register-password").value.trim();
 
-    if (!username || !email || !password) {
-      alert("Fill all fields!");
-      return;
-    }
+    if (!username || !email || !password) return alert("Please fill all fields!");
 
-    // Save user in localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
     users.push({ username, email, password });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Registration successful ✅");
-    
-    // Close modal
     registerModal.classList.add("hidden");
 
-    // Clear fields
     document.getElementById("register-username").value = "";
     document.getElementById("register-email").value = "";
     document.getElementById("register-password").value = "";
   };
+
+  /* ================= LOGIN MODAL ================= */
+  const loginBtn = document.getElementById("loginBtn");
+  const loginModal = document.getElementById("loginModal");
+  const loginSubmit = document.getElementById("login-submit");
+  const closeLogin = loginModal.querySelector(".close");
+
+  loginBtn.onclick = () => loginModal.classList.remove("hidden");
+  closeLogin.onclick = () => loginModal.classList.add("hidden");
+
+  loginSubmit.onclick = () => {
+    const email = document.getElementById("login-username").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+    if (!user) return alert("Invalid login ❌");
+
+    alert(`Welcome, ${user.username} ✅`);
+    loginModal.classList.add("hidden");
+    document.getElementById("login-username").value = "";
+    document.getElementById("login-password").value = "";
+  };
+
+  /* ================= BOOK SERVICE BUTTON ================= */
+  const bookServiceBtn = document.getElementById("bookServiceBtn");
+  if (bookServiceBtn) bookServiceBtn.onclick = () => showSection("#contact");
+
 });
-
-  /* ================= BOOK SERVICE ================= */
-  const bookBtn = document.getElementById("bookServiceBtn");
-  if (bookBtn) bookBtn.onclick = () => showSection("#contact");
-
-  /* ================= TOAST ================= */
-  function toast(msg) {
-    const t = document.createElement("div");
-    t.className = "toast";
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
-  }
-
-});
-

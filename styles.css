@@ -222,6 +222,39 @@ button:hover {
     width: 100%;
     box-sizing: border-box;
 }
+/* ================= PAYMENT ================= */
+.payment-box {
+  max-width: 420px;
+  margin: auto;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.payment-box .highlight {
+  color: #00e676;
+  font-weight: bold;
+}
+
+.payment-steps {
+  text-align: left;
+  margin: 15px 0;
+}
+
+.payment-steps li {
+  margin-bottom: 6px;
+}
+
+.cta-btn {
+  background: #00e676;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
@@ -260,3 +293,4 @@ button:hover {
 section {
     transition: all 0.3s ease-in-out;
 }
+

@@ -1,270 +1,293 @@
 /* ================= GENERAL STYLES ================= */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  background-color: #f7f7f7;
-  color: #333;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-h1, h2, h3 {
-  margin-bottom: 10px;
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 .hidden-section {
-  display: none;
+    display: none;
+}
+
+h1, h2, h3 {
+    margin: 0 0 10px 0;
+}
+
+p {
+    margin: 0 0 15px 0;
 }
 
 /* ================= HEADER ================= */
 .site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #333;
-  color: white;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #1f1f1f;
+    color: white;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.site-header .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-header .logo {
+    height: 50px;
 }
 
 .site-header nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.site-header nav a, .site-header nav button {
-  color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  background: #28a745;
-  cursor: pointer;
-  transition: background 0.3s;
+.site-header nav a, 
+.site-header nav button {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.site-header nav a:hover, .site-header nav button:hover {
-  background: #218838;
+.site-header nav a:hover,
+.site-header nav button:hover {
+    background-color: #28a745;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-container img {
-  height: 50px;
-}
-
-/* ================= HERO ================= */
+/* ================= HERO SECTION ================= */
 .hero {
-  background: #e0f7fa;
-  padding: 40px 20px;
-  text-align: center;
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background: #000;
 }
 
-.hero h1 {
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+.slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
 }
 
 .cta-btn {
-  padding: 10px 20px;
-  background: #28a745;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 .cta-btn:hover {
-  background: #218838;
+    background-color: #218838;
+}
+
+/* ================= SECTIONS ================= */
+section {
+    padding: 50px 20px;
+    background-color: #fff;
+    min-height: 70vh;
+}
+
+section h2 {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* ================= PRODUCTS ================= */
-#products {
-  padding: 20px;
-  background: #ffffff;
-}
-
 #product-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
 }
 
 .product {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  background: #f1f1f1;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.product:hover {
+    transform: translateY(-5px);
 }
 
 .product-icon {
-  font-size: 2rem;
-  color: #28a745;
-  min-width: 40px;
-  text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
-.product h3 {
-  margin-bottom: 5px;
+.add-to-cart-btn {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.product button {
-  margin-left: auto;
-  padding: 8px 15px;
-  border-radius: 5px;
-  background: #007bff;
-  color: white;
-}
-
-.product button:hover {
-  background: #0069d9;
+.add-to-cart-btn:hover {
+    background-color: #218838;
 }
 
 /* ================= CART ================= */
-#cart {
-  padding: 20px;
-  background: #ffffff;
-}
-
 #cart-items div {
-  padding: 5px 0;
+    margin-bottom: 8px;
 }
 
 #checkoutBtn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: #ffc107;
-  color: #333;
-  border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #17a2b8;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 #checkoutBtn:hover {
-  background: #e0a800;
+    background-color: #117a8b;
 }
 
-/* ================= PAYMENT ================= */
-#payment {
-  padding: 20px;
-  background: #e9ecef;
+/* ================= FORMS ================= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-/* ================= LOCATION ================= */
-#location {
-  padding: 20px;
-  background: #ffffff;
+input, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
 }
 
-#location iframe {
-  margin-top: 10px;
-  border-radius: 5px;
+button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* ================= CONTACT ================= */
-#contact {
-  padding: 20px;
-  background: #e9ecef;
-}
-
-#contact form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#contact input, #contact textarea {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-#contact button {
-  width: max-content;
-  padding: 10px 20px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#contact button:hover {
-  background: #218838;
+button[type="submit"]:hover {
+    background-color: #218838;
 }
 
 /* ================= MODALS ================= */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2000;
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+.modal.hidden {
+    display: none;
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 8px;
-  position: relative;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
 }
 
-.modal .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  cursor: pointer;
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ================= ADMIN PANEL ================= */
+#adminPanel {
+    display: none;
+    background-color: #f0f0f0;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+#adminPanel h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-product-list li,
+.admin-orders li {
+    margin-bottom: 10px;
 }
 
 /* ================= FOOTER ================= */
 footer {
-  text-align: center;
-  padding: 15px;
-  background: #333;
-  color: white;
-  margin-top: 20px;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .product {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .site-header nav {
-    flex-direction: column;
-    gap: 5px;
-  }
+    background-color: #1f1f1f;
+    color: white;
+    text-align: center;
+    padding: 20px;
 }

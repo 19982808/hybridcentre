@@ -1,110 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hybrid Spares Shop</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Spares Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="site-header">
-  <div class="logo-container">
-    <img src="logo.png" class="logo" alt="Hybrid Logo">
-    <h1>Hybrid Spares Shop</h1>
-  </div>
-  <nav>
-    <a href="#home" class="nav-link">Home</a>
-    <a href="#products" class="nav-link">Products</a>
-    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-    <a href="#payment" class="nav-link">Payment</a>
-    <a href="#location" class="nav-link">Location</a>
-    <a href="#contact" class="nav-link">Contact</a>
-    <button id="adminLoginBtn">Admin Login</button>
-  </nav>
+    <div class="logo-container">
+        <img src="logo.png" class="logo" alt="Hybrid Logo">
+        <h1>Hybrid Spares Shop</h1>
+    </div>
+    <nav>
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+        <a href="#payment" class="nav-link">Payment</a>
+        <a href="#location" class="nav-link">Location</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button id="adminLoginBtn">Admin Login</button>
+    </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="slideshow">
-    <div class="slide active" style="background-image:url('hero1.png')"></div>
-    <div class="slide" style="background-image:url('hero2.png')"></div>
-    <div class="slide" style="background-image:url('hero3.png')"></div>
-  </div>
-  <div class="hero-content">
-    <h1>Expert Hybrid Vehicle Spares</h1>
-    <p>Quality Parts • Battery & Modules • Hybrid Maintenance</p>
-    <button id="bookServiceBtn" class="cta-btn">Book Service</button>
-  </div>
+    <div class="slideshow">
+        <div class="slide active" style="background-image:url('hero1.png')"></div>
+        <div class="slide" style="background-image:url('hero2.png')"></div>
+        <div class="slide" style="background-image:url('hero3.png')"></div>
+    </div>
+    <div class="hero-content">
+        <h1>Expert Hybrid Vehicle Spares</h1>
+        <p>Quality Parts • Battery & Modules • Hybrid Maintenance</p>
+        <button id="bookServiceBtn" class="cta-btn">Book Service</button>
+    </div>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products" class="hidden-section">
-  <h2>Our Products</h2>
-  <div id="product-list" class="product-grid"></div>
+    <h2>Our Products</h2>
+    <div id="product-list" class="product-grid"></div>
 </section>
 
 <!-- CART -->
 <section id="cart" class="hidden-section">
-  <h2>Your Cart</h2>
-  <div id="cart-items"></div>
-  <button id="checkoutBtn" class="cta-btn">Checkout</button>
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <button id="checkoutBtn" class="cta-btn">Checkout</button>
 </section>
 
 <!-- PAYMENT -->
 <section id="payment" class="hidden-section">
-  <h2>Payment</h2>
-  <p>Click the button to complete your order via WhatsApp:</p>
-  <button id="payNowBtn" class="cta-btn">Pay via WhatsApp</button>
+    <h2>Payment</h2>
+    <p>Click the button to complete your order via WhatsApp:</p>
+    <button id="payNowBtn" class="cta-btn">Pay via WhatsApp</button>
 </section>
 
 <!-- LOCATION -->
 <section id="location" class="hidden-section">
-  <h2>Our Location</h2>
-  <p>Dagoretti Corner, Naivasha Road, Nairobi</p>
-  <iframe
-    src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
-    width="100%" height="300" style="border:0;">
-  </iframe>
+    <h2>Our Location</h2>
+    <p>Dagoretti Corner, Naivasha Road, Nairobi</p>
+    <iframe
+        src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
+        width="100%" height="300" style="border:0;">
+    </iframe>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="hidden-section">
-  <h2>Contact Us</h2>
-  <p>Call us: <a href="tel:+254700000000">+254 700 000 000</a></p>
-  <p>WhatsApp: <a href="https://wa.me/254700000000" target="_blank">Chat with us</a></p>
+    <h2>Contact Us</h2>
+    <p>Call us: <a href="tel:+254700000000">+254 700 000 000</a></p>
+    <p>WhatsApp: <a href="https://wa.me/254700000000" target="_blank">Chat with us</a></p>
 
-  <form id="bookServiceForm">
-    <h3>Book a Service</h3>
-    <input type="text" id="service-name" placeholder="Your Name" required>
-    <input type="tel" id="service-phone" placeholder="Phone Number" required>
-    <textarea id="service-details" placeholder="Service Details" required></textarea>
-    <button type="submit" class="cta-btn">Submit Booking</button>
-  </form>
+    <form id="bookServiceForm">
+        <h3>Book a Service</h3>
+        <input type="text" id="service-name" placeholder="Your Name" required>
+        <input type="tel" id="service-phone" placeholder="Phone Number" required>
+        <textarea id="service-details" placeholder="Service Details" required></textarea>
+        <button type="submit" class="cta-btn">Submit Booking</button>
+    </form>
 </section>
 
 <!-- ADMIN DASHBOARD MODAL -->
 <div id="adminModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" id="closeAdmin">&times;</span>
-    <h2>Admin Dashboard</h2>
-    <form id="add-product-form">
-      <input type="text" id="admin-product-name" placeholder="Product Name" required>
-      <input type="number" id="admin-product-price" placeholder="Price" required>
-      <input type="text" id="admin-product-icon" placeholder="FontAwesome Icon" required>
-      <button type="submit">Add Product</button>
-    </form>
-    <h3>Existing Products</h3>
-    <ul id="admin-product-list"></ul>
-    <h3>Cart Items</h3>
-    <ul id="admin-cart-list"></ul>
-  </div>
+    <div class="modal-content">
+        <span class="close" id="closeAdmin">&times;</span>
+        <h2>Admin Dashboard</h2>
+        <form id="add-product-form">
+            <input type="text" id="admin-product-name" placeholder="Product Name" required>
+            <input type="number" id="admin-product-price" placeholder="Price" required>
+            <input type="text" id="admin-product-icon" placeholder="FontAwesome Icon" required>
+            <button type="submit">Add Product</button>
+        </form>
+        <h3>Existing Products</h3>
+        <ul id="admin-product-list"></ul>
+        <h3>Cart Items</h3>
+        <ul id="admin-cart-list"></ul>
+    </div>
 </div>
 
 <footer>
-  <p>&copy; 2025 Hybrid Spares Shop. All rights reserved.</p>
+    <p>&copy; 2025 Hybrid Spares Shop. All rights reserved.</p>
 </footer>
 
 <script src="script.js"></script>

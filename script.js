@@ -1,6 +1,6 @@
 /* ================= GLOBAL STATE ================= */
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-let products = JSON.parse(localStorage.getItem("products")) || [
+let products = [
   { name: "Hybrid Batteries & Modules", price: 500, icon: "fa-battery-full" },
   { name: "Electric Motors & Generators", price: 750, icon: "fa-gears" },
   { name: "Inverters & Power Control Units", price: 400, icon: "fa-bolt" },
@@ -14,8 +14,28 @@ let products = JSON.parse(localStorage.getItem("products")) || [
 /* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* ===== HERO SLIDESHOW ===== */
+  const heroSection = document.querySelector(".hero");
+  const slides = [
+    "hero1.png",
+    "hero2.png",
+    "hero3.png"
+  ];
+
+  let currentSlide = 0;
+
+  function showSlide() {
+    heroSection.style.backgroundImage = `url('${slides[currentSlide]}')`;
+    currentSlide = (currentSlide + 1) % slides.length;
+  }
+
+  showSlide();
+  setInterval(showSlide, 5000);
+
   /* ===== SPA NAVIGATION ===== */
   const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
     const target = document.querySelector(id);
@@ -23,31 +43,19 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  document.querySelectorAll(".nav-link").forEach(link => {
+  navLinks.forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
       showSection(link.getAttribute("href"));
     });
   });
 
-  showSection("#home");
-
-  /* ===== HERO SLIDER ===== */
-  const slides = document.querySelectorAll(".slide");
-  let currentSlide = 0;
-
-  function showSlide(index) {
-    slides.forEach(s => s.classList.remove("active"));
-    slides[index].classList.add("active");
-    currentSlide = index;
-  }
-  setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
-  showSlide(0);
+  showSection("#home"); // default
 
   /* ===== PRODUCTS ===== */
   const productList = document.getElementById("product-list");
+
   function renderProducts() {
-    if (!productList) return;
     productList.innerHTML = "";
     products.forEach(p => {
       const div = document.createElement("div");
@@ -56,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <i class="fa-solid ${p.icon} product-icon"></i>
         <h3>${p.name}</h3>
         <p>Price: KES ${p.price}</p>
-        <button class="add-to-cart-btn">Add to Cart</button>
+        <button class="cta-btn add-to-cart-btn">Add to Cart</button>
       `;
       div.querySelector("button").addEventListener("click", () => {
         cartItems.push(p);
@@ -68,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ===== CART ===== */
-  const cartItemsDiv = document.getElementById("cart-items");
+  const cartDiv = document.getElementById("cart-items");
   const cartCount = document.getElementById("cart-count");
 
   function saveCart() {
@@ -77,20 +85,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateCart() {
-    cartItemsDiv.innerHTML = "";
+    cartDiv.innerHTML = "";
     cartCount.textContent = cartItems.length;
     let total = 0;
     cartItems.forEach(item => {
       total += Number(item.price);
-      cartItemsDiv.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
+      const div = document.createElement("div");
+      div.textContent = `${item.name} - KES ${item.price}`;
+      cartDiv.appendChild(div);
     });
-    if (cartItems.length) cartItemsDiv.innerHTML += `<strong>Total: KES ${total}</strong>`;
+    if (cartItems.length > 0) {
+      const totalDiv = document.createElement("div");
+      totalDiv.innerHTML = `<strong>Total: KES ${total}</strong>`;
+      cartDiv.appendChild(totalDiv);
+    }
   }
 
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     if (!cartItems.length) return alert("Cart is empty ❌");
     const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
-    alert(`Total amount: KES ${total}.\nPayment via WhatsApp.`);
+    alert(`Total amount: KES ${total}. Payment will be handled via WhatsApp.`);
     cartItems = [];
     saveCart();
   });
@@ -98,66 +112,60 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   updateCart();
 
-  /* ===== BOOK SERVICE ===== */
-  const bookServiceBtn = document.getElementById("bookServiceBtn");
-  if (bookServiceBtn) bookServiceBtn.addEventListener("click", () => showSection("#contact"));
-
-  /* ===== ADMIN DASHBOARD ===== */
-  const adminBtn = document.createElement("button");
-  adminBtn.textContent = "Admin Panel";
-  adminBtn.classList.add("admin-btn");
-  document.querySelector(".site-header nav").appendChild(adminBtn);
-
-  const adminModal = document.createElement("div");
-  adminModal.classList.add("modal", "hidden");
-  adminModal.innerHTML = `
-    <div class="modal-content">
-      <span class="close" id="closeAdmin">&times;</span>
-      <h2>Admin Dashboard</h2>
-      <form id="add-product-form">
-        <input type="text" id="p_name" placeholder="Product Name" required>
-        <input type="number" id="p_price" placeholder="Price" required>
-        <input type="text" id="p_icon" placeholder="FontAwesome Icon Class" required>
-        <button type="submit">Add Product</button>
-      </form>
-      <h3>All Products</h3>
-      <ul id="admin-product-list"></ul>
-      <h3>Cart Items</h3>
-      <ul id="admin-cart-list"></ul>
-    </div>
-  `;
-  document.body.appendChild(adminModal);
-
-  adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
-  document.getElementById("closeAdmin").addEventListener("click", () => adminModal.classList.add("hidden"));
-
-  /* ===== ADMIN FORM HANDLER ===== */
-  document.getElementById("add-product-form").addEventListener("submit", e => {
+  /* ===== BOOK SERVICE FORM ===== */
+  const bookForm = document.getElementById("bookServiceForm");
+  bookForm.addEventListener("submit", e => {
     e.preventDefault();
-    const newProduct = {
-      name: document.getElementById("p_name").value,
-      price: document.getElementById("p_price").value,
-      icon: document.getElementById("p_icon").value
-    };
-    products.push(newProduct);
-    localStorage.setItem("products", JSON.stringify(products));
-    renderProducts();
-    renderAdminProducts();
-    alert("Product added ✅");
+    const name = document.getElementById("service-name").value;
+    const phone = document.getElementById("service-phone").value;
+    const details = document.getElementById("service-details").value;
+    alert(`Booking received ✅\nName: ${name}\nPhone: ${phone}\nDetails: ${details}`);
+    bookForm.reset();
   });
 
-  function renderAdminProducts() {
-    const list = document.getElementById("admin-product-list");
-    list.innerHTML = "";
-    products.forEach(p => list.innerHTML += `<li>${p.name} - KES ${p.price}</li>`);
-  }
+  /* ===== PAYMENT CTA ===== */
+  const payBtn = document.getElementById("payNowBtn");
+  payBtn.addEventListener("click", () => {
+    const message = encodeURIComponent("Payment received! Thanks for shopping at Hybrid Spares Shop.");
+    const whatsappUrl = `https://wa.me/254700000000?text=${message}`;
+    window.open(whatsappUrl, "_blank");
+  });
 
-  function renderAdminCart() {
-    const list = document.getElementById("admin-cart-list");
-    list.innerHTML = "";
-    cartItems.forEach(i => list.innerHTML += `<li>${i.name} - KES ${i.price}</li>`);
+  /* ===== ADMIN DASHBOARD ===== */
+  const adminModal = document.getElementById("adminModal");
+  const adminBtn = document.getElementById("adminLoginBtn");
+  const closeAdmin = document.getElementById("closeAdmin");
+  const adminForm = document.getElementById("add-product-form");
+  const adminList = document.getElementById("admin-product-list");
+
+  adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
+  closeAdmin.addEventListener("click", () => adminModal.classList.add("hidden"));
+
+  function renderAdminProducts() {
+    adminList.innerHTML = "";
+    products.forEach((p, i) => {
+      const li = document.createElement("li");
+      li.textContent = `${p.name} - KES ${p.price} - Icon: ${p.icon}`;
+      adminList.appendChild(li);
+    });
   }
 
   renderAdminProducts();
-  renderAdminCart();
+
+  adminForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = document.getElementById("admin-product-name").value;
+    const price = document.getElementById("admin-product-price").value;
+    const icon = document.getElementById("admin-product-icon").value;
+    products.push({ name, price, icon });
+    renderProducts();
+    renderAdminProducts();
+    adminForm.reset();
+    alert(`Product "${name}" added ✅`);
+  });
+
+  /* ===== BOOK SERVICE CTA ===== */
+  const bookServiceBtn = document.getElementById("bookServiceBtn");
+  bookServiceBtn.addEventListener("click", () => showSection("#contact"));
+
 });

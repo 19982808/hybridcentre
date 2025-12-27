@@ -1,6 +1,5 @@
 /* ================= GLOBAL STATE ================= */
-let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-let products = [
+let products = JSON.parse(localStorage.getItem("products")) || [
   { name: "Hybrid Batteries & Modules", price: 500, icon: "fa-battery-full" },
   { name: "Electric Motors & Generators", price: 750, icon: "fa-gears" },
   { name: "Inverters & Power Control Units", price: 400, icon: "fa-bolt" },
@@ -10,12 +9,13 @@ let products = [
   { name: "Gearbox & Transmission", price: 600, icon: "fa-gears" },
   { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" }
 ];
-let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
 /* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== SECTIONS ===== */
+  /* ================= SPA NAVIGATION ================= */
   const sections = document.querySelectorAll("section");
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
@@ -33,40 +33,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSection("#home");
 
-  /* ===== HERO SLIDER ===== */
-  const slides = document.querySelectorAll(".slide");
-  let currentSlide = 0;
-  function showSlide(index) {
-    slides.forEach(s => s.classList.remove("active"));
-    slides[index].classList.add("active");
-    currentSlide = index;
-  }
-  setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
-  showSlide(0);
-
-  /* ===== PRODUCTS ===== */
+  /* ================= PRODUCT LIST ================= */
   const productList = document.getElementById("product-list");
+
   function renderProducts() {
+    if (!productList) return;
     productList.innerHTML = "";
-    products.forEach(p => {
+    products.forEach((p, idx) => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
         <i class="fa-solid ${p.icon} product-icon"></i>
         <h3>${p.name}</h3>
         <p>Price: KES ${p.price}</p>
-        <button class="add-to-cart-btn">Add to Cart</button>
+        <button class="add-to-cart-btn" data-id="${idx}">Add to Cart</button>
       `;
-      div.querySelector("button").addEventListener("click", () => {
-        cartItems.push(p);
-        saveCart();
-        alert(`${p.name} added to cart ✅`);
-      });
       productList.appendChild(div);
+    });
+
+    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        cartItems.push(products[id]);
+        saveCart();
+        alert(`${products[id].name} added to cart ✅`);
+      });
     });
   }
 
-  /* ===== CART ===== */
+  /* ================= CART ================= */
   const cartItemsDiv = document.getElementById("cart-items");
   const cartCount = document.getElementById("cart-count");
 
@@ -76,20 +71,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateCart() {
+    if (!cartItemsDiv || !cartCount) return;
     cartItemsDiv.innerHTML = "";
     cartCount.textContent = cartItems.length;
+
     let total = 0;
     cartItems.forEach(item => {
       total += Number(item.price);
-      cartItemsDiv.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
+      const div = document.createElement("div");
+      div.textContent = `${item.name} - KES ${item.price}`;
+      cartItemsDiv.appendChild(div);
     });
-    if (cartItems.length) cartItemsDiv.innerHTML += `<strong>Total: KES ${total}</strong>`;
+
+    if (cartItems.length) {
+      const totalDiv = document.createElement("strong");
+      totalDiv.textContent = `Total: KES ${total}`;
+      cartItemsDiv.appendChild(totalDiv);
+    }
   }
 
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
+  document.getElementById("checkoutBtn")?.addEventListener("click", () => {
     if (!cartItems.length) return alert("Cart is empty ❌");
     const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
-    alert(`Total amount: KES ${total}. Payment will be handled via M-Pesa / WhatsApp.`);
+    const phone = prompt("Enter your WhatsApp number (2547XXXXXXXX):");
+    if (!phone) return;
+
+    let message = `🛒 *Hybrid Service Centre Order*\n\n`;
+    cartItems.forEach(item => message += `• ${item.name} - KES ${item.price}\n`);
+    message += `\n*Total:* KES ${total}\nThank you for shopping with us!`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+
+    alert("Payment received ✅\nOrder sent via WhatsApp");
     cartItems = [];
     saveCart();
   });
@@ -97,56 +110,41 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   updateCart();
 
-  /* ===== MODALS ===== */
-  const loginModal = document.getElementById("loginModal");
-  const registerModal = document.getElementById("registerModal");
-  const closeLogin = document.getElementById("closeLogin");
-  const closeRegister = document.getElementById("closeRegister");
-  const loginBtn = document.getElementById("loginBtn");
-  const registerBtn = document.getElementById("registerBtn");
-
-  // Open modals
-  loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
-  registerBtn.addEventListener("click", () => registerModal.classList.remove("hidden"));
-
-  // Close modals
-  closeLogin.addEventListener("click", () => loginModal.classList.add("hidden"));
-  closeRegister.addEventListener("click", () => registerModal.classList.add("hidden"));
-
-  // Close modal when clicking outside content
-  [loginModal, registerModal].forEach(modal => {
-    modal.addEventListener("click", e => {
-      if (e.target === modal) modal.classList.add("hidden");
-    });
-  });
-
-  /* ===== LOGIN ===== */
-  document.getElementById("login-submit").addEventListener("click", () => {
-    isLoggedIn = true;
-    localStorage.setItem("isLoggedIn", "true");
-    loginModal.classList.add("hidden");
-    alert("Logged in successfully ✅");
-  });
-
-  /* ===== REGISTER ===== */
-  document.getElementById("register-submit").addEventListener("click", () => {
-    const username = document.getElementById("register-username").value;
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
-
-    if (!username || !email || !password) {
-      alert("Please fill all fields ❌");
-      return;
-    }
-
-    isLoggedIn = true;
-    localStorage.setItem("isLoggedIn", "true");
-    registerModal.classList.add("hidden");
-    alert(`Registration confirmed ✅\nWelcome, ${username}`);
-  });
-
-  /* ===== BOOK SERVICE ===== */
+  /* ================= BOOK SERVICE ================= */
   const bookServiceBtn = document.getElementById("bookServiceBtn");
-  bookServiceBtn.addEventListener("click", () => showSection("#contact"));
+  if (bookServiceBtn) {
+    bookServiceBtn.addEventListener("click", () => {
+      showSection("#contact");
+      document.getElementById("contact-name").focus();
+    });
+  }
+
+  /* ================= ADMIN PANEL ================= */
+  const adminBtn = document.getElementById("adminBtn");
+  const adminPanel = document.getElementById("adminPanel");
+  const adminLoginModal = document.getElementById("adminLoginModal");
+  const closeAdminLogin = document.getElementById("closeAdminLogin");
+  const adminLoginSubmit = document.getElementById("adminLoginSubmit");
+
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => adminLoginModal.classList.remove("hidden"));
+  }
+
+  if (closeAdminLogin) {
+    closeAdminLogin.addEventListener("click", () => adminLoginModal.classList.add("hidden"));
+  }
+
+  if (adminLoginSubmit) {
+    adminLoginSubmit.addEventListener("click", () => {
+      const user = document.getElementById("adminUsername").value;
+      const pass = document.getElementById("adminPassword").value;
+      if (user === "admin" && pass === "1234") {
+        adminLoginModal.classList.add("hidden");
+        adminPanel.classList.remove("hidden");
+        renderProducts();
+        alert("Admin logged in ✅");
+      } else alert("Invalid credentials ❌");
+    });
+  }
 
 });

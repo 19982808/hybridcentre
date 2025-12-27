@@ -156,17 +156,47 @@ document.addEventListener("DOMContentLoaded", () => {
     toast("Logged in ✅");
   };
 
-  document.getElementById("register-submit").onclick = () => {
-    const username = document.getElementById("register-username").value;
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
-    if (!username || !email || !password) return alert("Fill all fields");
+document.addEventListener("DOMContentLoaded", () => {
+
+  const registerModal = document.getElementById("registerModal");
+  const registerBtn = document.getElementById("registerBtn");
+  const closeRegister = registerModal.querySelector(".close");
+  const registerSubmit = document.getElementById("register-submit");
+
+  // Open modal
+  registerBtn.onclick = () => registerModal.classList.remove("hidden");
+
+  // Close modal
+  closeRegister.onclick = () => registerModal.classList.add("hidden");
+
+  // Register submit
+  registerSubmit.onclick = () => {
+    const username = document.getElementById("register-username").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value.trim();
+
+    if (!username || !email || !password) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    // Get current users from localStorage or empty array
     const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Add new user
     users.push({ username, email, password });
     localStorage.setItem("users", JSON.stringify(users));
-    closeModal(registerModal);
-    toast("Registered successfully ✅");
+
+    // Clear inputs
+    document.getElementById("register-username").value = "";
+    document.getElementById("register-email").value = "";
+    document.getElementById("register-password").value = "";
+
+    registerModal.classList.add("hidden");
+    alert("Registration successful ✅");
   };
+});
+
 
   /* ================= BOOK SERVICE BUTTON ================= */
   const bookBtn = document.getElementById("bookServiceBtn");
@@ -182,3 +212,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+

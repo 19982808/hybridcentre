@@ -14,7 +14,7 @@ let products = JSON.parse(localStorage.getItem("products")) || [
 /* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== SECTIONS & NAVIGATION ===== */
+  /* ===== SPA NAVIGATION ===== */
   const sections = document.querySelectorAll("section");
   function showSection(id) {
     sections.forEach(sec => sec.classList.add("hidden-section"));
@@ -44,16 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
   showSlide(0);
 
-  /* ===== PRODUCT LISTING ===== */
+  /* ===== PRODUCTS ===== */
   const productList = document.getElementById("product-list");
-
   function renderProducts() {
+    if (!productList) return;
     productList.innerHTML = "";
     products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
-        <i class="fa-solid ${p.icon}"></i>
+        <i class="fa-solid ${p.icon} product-icon"></i>
         <h3>${p.name}</h3>
         <p>Price: KES ${p.price}</p>
         <button class="add-to-cart-btn">Add to Cart</button>
@@ -89,114 +89,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("checkoutBtn").addEventListener("click", () => {
     if (!cartItems.length) return alert("Cart is empty ❌");
-
     const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
-    const phone = prompt("Enter your WhatsApp number (2547XXXXXXXX) to send payment confirmation:");
-    if (!phone) return;
-
-    const message = `🛒 *Hybrid Spares Shop Order*\n\n` +
-      cartItems.map(i => `• ${i.name} - KES ${i.price}`).join("\n") +
-      `\n\n*Total:* KES ${total}\nPayment received ✅ Thanks for shopping Hybrid!`;
-
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-
+    alert(`Total amount: KES ${total}.\nPayment via WhatsApp.`);
     cartItems = [];
     saveCart();
-    alert("Payment confirmed & WhatsApp message sent! ✅");
   });
 
   renderProducts();
   updateCart();
 
-  /* ===== BOOK SERVICE FORM ===== */
+  /* ===== BOOK SERVICE ===== */
   const bookServiceBtn = document.getElementById("bookServiceBtn");
-  bookServiceBtn.addEventListener("click", () => showSection("#contact"));
+  if (bookServiceBtn) bookServiceBtn.addEventListener("click", () => showSection("#contact"));
 
-  const contactForm = document.getElementById("contact-form");
-  contactForm.addEventListener("submit", e => {
+  /* ===== ADMIN DASHBOARD ===== */
+  const adminBtn = document.createElement("button");
+  adminBtn.textContent = "Admin Panel";
+  adminBtn.classList.add("admin-btn");
+  document.querySelector(".site-header nav").appendChild(adminBtn);
+
+  const adminModal = document.createElement("div");
+  adminModal.classList.add("modal", "hidden");
+  adminModal.innerHTML = `
+    <div class="modal-content">
+      <span class="close" id="closeAdmin">&times;</span>
+      <h2>Admin Dashboard</h2>
+      <form id="add-product-form">
+        <input type="text" id="p_name" placeholder="Product Name" required>
+        <input type="number" id="p_price" placeholder="Price" required>
+        <input type="text" id="p_icon" placeholder="FontAwesome Icon Class" required>
+        <button type="submit">Add Product</button>
+      </form>
+      <h3>All Products</h3>
+      <ul id="admin-product-list"></ul>
+      <h3>Cart Items</h3>
+      <ul id="admin-cart-list"></ul>
+    </div>
+  `;
+  document.body.appendChild(adminModal);
+
+  adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
+  document.getElementById("closeAdmin").addEventListener("click", () => adminModal.classList.add("hidden"));
+
+  /* ===== ADMIN FORM HANDLER ===== */
+  document.getElementById("add-product-form").addEventListener("submit", e => {
     e.preventDefault();
-    const name = document.getElementById("contact-name").value;
-    const email = document.getElementById("contact-email").value;
-    const message = document.getElementById("contact-message").value;
-
-    const phone = prompt("Enter WhatsApp number to confirm booking:");
-    if (!phone) return;
-
-    const text = `📩 *Booking Request*\nName: ${name}\nEmail: ${email}\nMessage: ${message}`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
-
-    contactForm.reset();
-    alert("Booking form sent via WhatsApp! ✅");
-  });
-/* ===== ADMIN DASHBOARD ===== */
-const adminBtn = document.createElement("button");
-adminBtn.textContent = "Admin Panel";
-adminBtn.style.marginLeft = "10px";
-document.querySelector(".site-header nav").appendChild(adminBtn);
-
-// Create hidden modal
-const adminModal = document.createElement("div");
-adminModal.classList.add("modal", "hidden"); // hidden by default
-adminModal.innerHTML = `
-  <div class="modal-content">
-    <span class="close" id="closeAdmin">&times;</span>
-    <h2>Admin Dashboard</h2>
-    <form id="add-product-form">
-      <input type="text" id="p_name" placeholder="Product Name" required>
-      <input type="number" id="p_price" placeholder="Price" required>
-      <input type="text" id="p_icon" placeholder="FontAwesome Icon Class" required>
-      <button type="submit">Add Product</button>
-    </form>
-    <h3>All Products</h3>
-    <ul id="admin-product-list"></ul>
-    <h3>Cart Items</h3>
-    <ul id="admin-cart-list"></ul>
-  </div>
-`;
-document.body.appendChild(adminModal);
-
-// Open/Close
-adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
-document.getElementById("closeAdmin").addEventListener("click", () => adminModal.classList.add("hidden"));
-
-
-  const addProductForm = document.getElementById("add-product-form");
-  addProductForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const name = document.getElementById("p_name").value;
-    const price = document.getElementById("p_price").value;
-    const icon = document.getElementById("p_icon").value;
-
-    products.push({ name, price, icon });
+    const newProduct = {
+      name: document.getElementById("p_name").value,
+      price: document.getElementById("p_price").value,
+      icon: document.getElementById("p_icon").value
+    };
+    products.push(newProduct);
     localStorage.setItem("products", JSON.stringify(products));
     renderProducts();
     renderAdminProducts();
-
-    addProductForm.reset();
     alert("Product added ✅");
   });
 
   function renderAdminProducts() {
     const list = document.getElementById("admin-product-list");
     list.innerHTML = "";
-    products.forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = `${p.name} - KES ${p.price}`;
-      list.appendChild(li);
-    });
+    products.forEach(p => list.innerHTML += `<li>${p.name} - KES ${p.price}</li>`);
   }
 
   function renderAdminCart() {
     const list = document.getElementById("admin-cart-list");
     list.innerHTML = "";
-    cartItems.forEach(c => {
-      const li = document.createElement("li");
-      li.textContent = `${c.name} - KES ${c.price}`;
-      list.appendChild(li);
-    });
+    cartItems.forEach(i => list.innerHTML += `<li>${i.name} - KES ${i.price}</li>`);
   }
 
   renderAdminProducts();
   renderAdminCart();
 });
-

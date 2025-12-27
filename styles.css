@@ -243,3 +243,7 @@ footer {
   background: #222;
   color: #fff;
 }
+.hidden {
+  display: none !important;
+}
+

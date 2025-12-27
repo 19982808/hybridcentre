@@ -37,9 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll(".nav-link");
 
     function showSection(id) {
-        sections.forEach(sec => sec.classList.add("hidden-section")); // Hide all sections
+        // Hide all sections including the hero section
+        sections.forEach(sec => sec.classList.add("hidden-section"));
+        heroSection.classList.add("hidden-section"); // Hide the hero section
+
+        // Show the selected section
         const target = document.querySelector(id);
-        if (target) target.classList.remove("hidden-section"); // Show the selected section
+        if (target) target.classList.remove("hidden-section");
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -50,7 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    showSection("#home"); // Default section to display
+    // Optionally, show the home section by default or keep it hidden
+    // showSection("#home"); // Uncomment this line if you want to show the home section initially
 
     /* ===== PRODUCTS ===== */
     const productList = document.getElementById("product-list");

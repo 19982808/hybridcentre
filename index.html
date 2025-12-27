@@ -63,7 +63,11 @@
 <!-- LOCATION -->
 <section id="location" class="hidden-section">
   <h2>Our Location</h2>
-  <iframe src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed" width="100%" height="300" style="border:0;"></iframe>
+  <p>Naivasha Road, Dagoretti Corner, next to Shell Petrol Station</p>
+  <iframe
+    src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
+    width="100%" height="300" style="border:0;">
+  </iframe>
 </section>
 
 <!-- CONTACT -->
@@ -81,7 +85,7 @@
 <!-- LOGIN MODAL -->
 <div id="loginModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close" id="closeLogin">&times;</span>
     <h2>Login</h2>
     <input type="text" id="login-username" placeholder="Email" required>
     <input type="password" id="login-password" placeholder="Password" required>
@@ -92,7 +96,7 @@
 <!-- REGISTER MODAL -->
 <div id="registerModal" class="modal hidden">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <span class="close" id="closeRegister">&times;</span>
     <h2>Register</h2>
     <input type="text" id="register-username" placeholder="Username" required>
     <input type="email" id="register-email" placeholder="Email" required>

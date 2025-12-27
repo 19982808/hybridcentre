@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hybrid Service Centre</title>
+<title>Hybrid Spares Shop</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -13,20 +13,22 @@
 <header class="site-header">
   <div class="logo-container">
     <img src="logo.png" class="logo" alt="Logo">
-    <h1>HYBRID CENTRE</h1>
+    <h1>HYBRID SPARES</h1>
   </div>
   <nav>
     <a href="#home" class="nav-link">Home</a>
     <a href="#products" class="nav-link">Products</a>
-    <a href="#cart" class="nav-link">Cart</a>
-    <a href="#payment" class="nav-link">Payment</a>
-    <a href="#location" class="nav-link">Location</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#book-service" class="nav-link">Book Service</a>
     <a href="#contact" class="nav-link">Contact</a>
+     <a href="#payment" class="nav-link">Payment</a>
+     <a href="#location" class="nav-link">Location</a>
+    <button id="adminBtn">Admin Panel</button>
   </nav>
 </header>
 
 <!-- HERO -->
-<section id="home">
+<section class="hero" id="home">
   <div class="slideshow">
     <div class="slide active" style="background-image:url('hero1.png')"></div>
     <div class="slide" style="background-image:url('hero2.png')"></div>
@@ -34,68 +36,89 @@
   </div>
   <div class="hero-content">
     <h1>Expert Hybrid Vehicle Services</h1>
-    <p>Diagnostics • Battery • Hybrid Maintenance</p>
-    <a href="#contact"><button class="cta-btn">Book Service</button></a>
+    <p>Diagnostics • Batteries • Maintenance</p>
+    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
   </div>
 </section>
 
 <!-- PRODUCTS -->
-<section id="products">
+<section id="products" class="hidden-section">
   <h2>Our Products</h2>
   <div id="product-list"></div>
 </section>
 
 <!-- CART -->
-<section id="cart">
+<section id="cart" class="hidden-section">
   <h2>Your Cart</h2>
   <div id="cart-items"></div>
   <button id="checkoutBtn">Checkout</button>
 </section>
 
-<!-- PAYMENT -->
-<section id="payment">
-  <h2>Complete Payment</h2>
-  <p>Pay using M-Pesa or WhatsApp order</p>
-</section>
-
-<!-- LOCATION -->
-<section id="location">
-  <h2>Our Location</h2>
-  <p>Naivasha Road, Dagoretti Corner, next to Shell Petrol Station</p>
-  <iframe
-    src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
-    width="100%" height="300" style="border:0;">
-  </iframe>
+<!-- BOOK SERVICE -->
+<section id="book-service" class="hidden-section">
+  <h2>Book a Service</h2>
+  <form id="service-form">
+    <input type="text" id="service-name" placeholder="Your Name" required>
+    <input type="tel" id="service-phone" placeholder="Phone Number" required>
+    <textarea id="service-details" placeholder="Vehicle/Service Details" required></textarea>
+    <button type="submit">Submit Service Request</button>
+  </form>
+  <p id="service-status"></p>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
+<section id="contact" class="hidden-section">
   <h2>Contact Us</h2>
-  <form id="contact-form">
-    <input type="text" id="contact-name" placeholder="Your Name" required>
-    <input type="email" id="contact-email" placeholder="Your Email" required>
-    <textarea id="contact-message" placeholder="Your Message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-
-  <h2>Register</h2>
-  <form id="register-form">
-    <input type="text" id="register-username" placeholder="Username" required>
-    <input type="email" id="register-email" placeholder="Email" required>
-    <input type="password" id="register-password" placeholder="Password" required>
-    <button type="submit">Register</button>
-  </form>
-
-  <h2>Login</h2>
-  <form id="login-form">
-    <input type="email" id="login-email" placeholder="Email" required>
-    <input type="password" id="login-password" placeholder="Password" required>
-    <button type="submit">Login</button>
-  </form>
+  <p><i class="fa-solid fa-phone"></i> <a href="tel:0780328599">0780328599</a></p>
+  <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/254780328599" target="_blank">Chat on WhatsApp</a></p>
+</section>
+<!-- PAYMENT -->
+<section id="payment" class="hidden-section">
+  <h2>Complete Payment</h2>
+  <p>Total Amount: KES <span id="payment-total">0</span></p>
+  <button id="paymentBtn" class="cta-btn">Pay via WhatsApp</button>
+</section>
+<!-- LOCATION -->
+<section id="location" class="hidden-section">
+  <h2>Our Location</h2>
+  <p>Visit us at: <strong>Naivasha Road, Dagoretti Corner, Nairobi</strong></p>
+  <p>Next to Shell Petrol Station</p>
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
+      width="100%"
+      height="400"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
 </section>
 
+<!-- ADMIN PANEL MODAL -->
+<div id="adminModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" id="closeAdmin">&times;</span>
+    <h2>Admin Panel</h2>
+
+    <div id="admin-add-product">
+      <h3>Add Product</h3>
+      <input type="text" id="admin-product-name" placeholder="Product Name">
+      <input type="number" id="admin-product-price" placeholder="Price">
+      <input type="text" id="admin-product-icon" placeholder="FontAwesome Icon (fa-bolt)">
+      <button id="admin-add-btn">Add Product</button>
+    </div>
+
+    <div id="admin-orders">
+      <h3>Orders / Cart Items</h3>
+      <ul id="admin-order-list"></ul>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <p>&copy; 2025 Hybrid Service Centre. All rights reserved.</p>
+  <p>&copy; 2025 Hybrid Spares. All rights reserved.</p>
 </footer>
 
 <script src="script.js"></script>

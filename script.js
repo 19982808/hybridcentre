@@ -1,5 +1,6 @@
 /* ================= GLOBAL STATE ================= */
-let products = JSON.parse(localStorage.getItem("products")) || [
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+let products = [
   { name: "Hybrid Batteries & Modules", price: 500, icon: "fa-battery-full" },
   { name: "Electric Motors & Generators", price: 750, icon: "fa-gears" },
   { name: "Inverters & Power Control Units", price: 400, icon: "fa-bolt" },
@@ -10,17 +11,29 @@ let products = JSON.parse(localStorage.getItem("products")) || [
   { name: "Auxiliary & Safety Parts", price: 150, icon: "fa-triangle-exclamation" }
 ];
 
-let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
 /* ================= DOM READY ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ================= SPA NAVIGATION ================= */
+  /* ===== HERO SLIDER ===== */
+  const slides = document.querySelectorAll(".slide");
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach(s => s.classList.remove("active"));
+    slides[index].classList.add("active");
+    currentSlide = index;
+  }
+
+  setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+  showSlide(0);
+
+  /* ===== SPA NAVIGATION ===== */
   const sections = document.querySelectorAll("section");
+
   function showSection(id) {
-    sections.forEach(sec => sec.classList.add("hidden-section"));
+    sections.forEach(sec => sec.classList.add("hidden-section")); // hide all sections
     const target = document.querySelector(id);
-    if (target) target.classList.remove("hidden-section");
+    if (target) target.classList.remove("hidden-section"); // show only clicked section
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -31,37 +44,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Show home by default
   showSection("#home");
 
-  /* ================= PRODUCT LIST ================= */
+  /* ===== PRODUCTS ===== */
   const productList = document.getElementById("product-list");
-
   function renderProducts() {
-    if (!productList) return;
     productList.innerHTML = "";
-    products.forEach((p, idx) => {
+    products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
       div.innerHTML = `
         <i class="fa-solid ${p.icon} product-icon"></i>
         <h3>${p.name}</h3>
         <p>Price: KES ${p.price}</p>
-        <button class="add-to-cart-btn" data-id="${idx}">Add to Cart</button>
+        <button class="add-to-cart-btn">Add to Cart</button>
       `;
-      productList.appendChild(div);
-    });
-
-    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        cartItems.push(products[id]);
+      div.querySelector("button").addEventListener("click", () => {
+        cartItems.push(p);
         saveCart();
-        alert(`${products[id].name} added to cart ✅`);
+        alert(`${p.name} added to cart ✅`);
       });
+      productList.appendChild(div);
     });
   }
 
-  /* ================= CART ================= */
+  /* ===== CART ===== */
   const cartItemsDiv = document.getElementById("cart-items");
   const cartCount = document.getElementById("cart-count");
 
@@ -71,38 +79,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateCart() {
-    if (!cartItemsDiv || !cartCount) return;
     cartItemsDiv.innerHTML = "";
     cartCount.textContent = cartItems.length;
-
     let total = 0;
     cartItems.forEach(item => {
       total += Number(item.price);
-      const div = document.createElement("div");
-      div.textContent = `${item.name} - KES ${item.price}`;
-      cartItemsDiv.appendChild(div);
+      cartItemsDiv.innerHTML += `<div>${item.name} - KES ${item.price}</div>`;
     });
-
-    if (cartItems.length) {
-      const totalDiv = document.createElement("strong");
-      totalDiv.textContent = `Total: KES ${total}`;
-      cartItemsDiv.appendChild(totalDiv);
-    }
+    if (cartItems.length) cartItemsDiv.innerHTML += `<strong>Total: KES ${total}</strong>`;
   }
 
-  document.getElementById("checkoutBtn")?.addEventListener("click", () => {
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
     if (!cartItems.length) return alert("Cart is empty ❌");
     const total = cartItems.reduce((sum, i) => sum + Number(i.price), 0);
-    const phone = prompt("Enter your WhatsApp number (2547XXXXXXXX):");
-    if (!phone) return;
-
-    let message = `🛒 *Hybrid Service Centre Order*\n\n`;
-    cartItems.forEach(item => message += `• ${item.name} - KES ${item.price}\n`);
-    message += `\n*Total:* KES ${total}\nThank you for shopping with us!`;
-
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-
-    alert("Payment received ✅\nOrder sent via WhatsApp");
+    alert(`Total amount: KES ${total}. Payment will be handled via M-Pesa / WhatsApp.`);
     cartItems = [];
     saveCart();
   });
@@ -110,63 +100,16 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   updateCart();
 
-  /* ================= BOOK SERVICE ================= */
+  /* ===== MODALS / ADMIN PANEL (REPLACED LOGIN/REGISTER) ===== */
+  const adminModal = document.getElementById("registerModal"); // reuse register modal for admin
+  const closeAdmin = document.getElementById("closeRegister");
+  const adminBtn = document.getElementById("registerBtn"); // register button replaced with admin panel
+
+  adminBtn.addEventListener("click", () => adminModal.classList.remove("hidden"));
+  closeAdmin.addEventListener("click", () => adminModal.classList.add("hidden"));
+
+  /* ===== BOOK SERVICE ===== */
   const bookServiceBtn = document.getElementById("bookServiceBtn");
-  if (bookServiceBtn) {
-    bookServiceBtn.addEventListener("click", () => {
-      showSection("#contact");
-      document.getElementById("contact-name").focus();
-    });
-  }
-
-  /* ================= ADMIN PANEL ================= */
-  const adminBtn = document.getElementById("adminBtn");
-  const adminPanel = document.getElementById("adminPanel");
-  const adminLoginModal = document.getElementById("adminLoginModal");
-  const closeAdminLogin = document.getElementById("closeAdminLogin");
-  const adminLoginSubmit = document.getElementById("adminLoginSubmit");
-
-  if (adminBtn) {
-    adminBtn.addEventListener("click", () => adminLoginModal.classList.remove("hidden"));
-  }
-
-  if (closeAdminLogin) {
-    closeAdminLogin.addEventListener("click", () => adminLoginModal.classList.add("hidden"));
-  }
-
-  if (adminLoginSubmit) {
-    adminLoginSubmit.addEventListener("click", () => {
-      const user = document.getElementById("adminUsername").value;
-      const pass = document.getElementById("adminPassword").value;
-      if (user === "admin" && pass === "1234") {
-        adminLoginModal.classList.add("hidden");
-        adminPanel.classList.remove("hidden");
-        renderProducts();
-        alert("Admin logged in ✅");
-      } else alert("Invalid credentials ❌");
-    });
-  }
+  bookServiceBtn.addEventListener("click", () => showSection("#contact"));
 
 });
-
-// All your sections
-const sections = document.querySelectorAll("section");
-
-// Function to show only one section
-function showSection(id) {
-  sections.forEach(sec => sec.classList.add("hidden-section")); // hide all
-  const target = document.querySelector(id); 
-  if (target) target.classList.remove("hidden-section"); // show clicked
-  window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top
-}
-
-// Add click event to navbar links
-document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault();
-    showSection(link.getAttribute("href"));
-  });
-});
-
-// Optional: Show home on first load
-showSection("#home");

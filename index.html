@@ -20,7 +20,6 @@
     <a href="#products" class="nav-link">Products</a>
     <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
     <a href="#payment" class="nav-link">Payment</a>
-
     <a href="#location" class="nav-link">Location</a>
     <a href="#contact" class="nav-link">Contact</a>
     <button id="loginBtn">Login</button>
@@ -52,21 +51,21 @@
       <h3>Hybrid Batteries & Modules</h3>
       <p>High-quality battery packs compatible with hybrid vehicles.</p>
       <p>Price: $500</p>
-      <button class="add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
+      <button class="add-to-cart-btn" data-name="Hybrid Batteries & Modules" data-price="500">Buy Now</button>
     </div>
     <div class="product">
       <i class="fa-solid fa-gears product-icon"></i>
       <h3>Electric Motors & Generators</h3>
       <p>Reliable motors and motor-generators.</p>
       <p>Price: $750</p>
-      <button class="add-to-cart-btn" data-name="Electric Motors" data-price="750">Buy Now</button>
+      <button class="add-to-cart-btn" data-name="Electric Motors & Generators" data-price="750">Buy Now</button>
     </div>
     <div class="product">
       <i class="fa-solid fa-bolt product-icon"></i>
       <h3>Inverters & Power Control Units</h3>
       <p>Efficient energy management components.</p>
       <p>Price: $400</p>
-      <button class="add-to-cart-btn" data-name="Inverters" data-price="400">Buy Now</button>
+      <button class="add-to-cart-btn" data-name="Inverters & Power Control Units" data-price="400">Buy Now</button>
     </div>
     <div class="product">
       <i class="fa-solid fa-engine product-icon"></i>
@@ -94,14 +93,14 @@
       <h3>Gearbox & Transmission</h3>
       <p>Automatic & CVT gearboxes.</p>
       <p>Price: $600</p>
-      <button class="add-to-cart-btn" data-name="Gearbox" data-price="600">Buy Now</button>
+      <button class="add-to-cart-btn" data-name="Gearbox & Transmission" data-price="600">Buy Now</button>
     </div>
     <div class="product">
       <i class="fa-solid fa-triangle-exclamation product-icon"></i>
       <h3>Auxiliary & Safety Parts</h3>
       <p>High-voltage cables and safety components.</p>
       <p>Price: $150</p>
-      <button class="add-to-cart-btn" data-name="Auxiliary Parts" data-price="150">Buy Now</button>
+      <button class="add-to-cart-btn" data-name="Auxiliary & Safety Parts" data-price="150">Buy Now</button>
     </div>
   </div>
 </section>
@@ -112,17 +111,15 @@
   <div id="cart-items"></div>
   <button id="checkoutBtn">Checkout</button>
 </section>
-<!-- ================= PAYMENT ================= -->
+
+<!-- PAYMENT -->
 <section id="payment" class="hidden-section">
   <h2>Complete Payment</h2>
-
   <div class="payment-box">
     <h3>M-Pesa Payment</h3>
-
     <p><strong>Paybill Number:</strong> <span class="highlight">222111</span></p>
     <p><strong>Account Number:</strong> <span class="highlight">5825469</span></p>
     <p><strong>Business Name:</strong> HYBRID CENTRE</p>
-
     <ol class="payment-steps">
       <li>Go to <strong>M-Pesa</strong> on your phone</li>
       <li>Select <strong>Lipa na M-Pesa</strong></li>
@@ -131,10 +128,7 @@
       <li>Enter Account <strong>5825469</strong></li>
       <li>Enter amount & confirm</li>
     </ol>
-
-    <button id="paidBtn" class="cta-btn">
-      I Have Paid
-    </button>
+    <button id="paidBtn" class="cta-btn">I Have Paid</button>
   </div>
 </section>
 
@@ -142,17 +136,11 @@
 <section id="location" class="hidden-section">
   <h2>Our Location</h2>
   <p>Naivasha Road, Dagoretti Corner, next to Shell Petrol Station</p>
-
   <iframe
     src="https://www.google.com/maps?q=Shell+Petrol+Station+Dagoretti+Corner+Naivasha+Road+Nairobi&output=embed"
-    width="100%"
-    height="300"
-    style="border:0;"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
+    width="100%" height="300" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
-
 
 <!-- CONTACT -->
 <section id="contact" class="hidden-section">
@@ -167,8 +155,6 @@
   </form>
   <p id="contact-status"></p>
 </section>
-
-
 
 <!-- LOGIN MODAL -->
 <div id="loginModal" class="modal hidden">
@@ -193,31 +179,20 @@
   </div>
 </div>
 
-<!-- Buttons -->
-<button id="loginBtn">Login</button>
-<button id="registerBtn">Register</button>
-
+<!-- M-PESA PAYMENT MODAL -->
+<div id="paymentModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closePayment()">&times;</span>
+    <h3>Confirm M-Pesa Payment</h3>
+    <input type="text" id="mpesaCode" placeholder="M-Pesa Code (e.g. QJD7X2K9)" />
+    <button id="submitPayment" class="submit-btn">Submit Payment</button>
+  </div>
+</div>
 
 <footer>
   <p>&copy; 2025 Hybrid Service Centre. All rights reserved.</p>
 </footer>
 
 <script src="script.js"></script>
-  <div id="paymentModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close" onclick="closePayment()">&times;</span>
-
-    <h3>Confirm M-Pesa Payment</h3>
-
-    <input type="text" id="mpesaCode" placeholder="M-Pesa Code (e.g. QJD7X2K9)" />
-    <button id="submitPayment" class="submit-btn">Submit Payment</button>
-  </div>
-</div>
-
 </body>
 </html>
-
-
-
-
-

@@ -28,6 +28,11 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('hero1.png')"></div>
+    <div class="slide" style="background-image:url('hero2.png')"></div>
+    <div class="slide" style="background-image:url('hero3.png')"></div>
+  </div>
   <div class="hero-content">
     <h1>Expert Hybrid Vehicle Spares</h1>
     <p>Quality Parts • Battery & Modules • Hybrid Maintenance</p>
@@ -70,6 +75,7 @@
   <h2>Contact Us</h2>
   <p>Call us: <a href="tel:+254700000000">+254 700 000 000</a></p>
   <p>WhatsApp: <a href="https://wa.me/254700000000" target="_blank">Chat with us</a></p>
+
   <form id="bookServiceForm">
     <h3>Book a Service</h3>
     <input type="text" id="service-name" placeholder="Your Name" required>
@@ -79,7 +85,7 @@
   </form>
 </section>
 
-<!-- ADMIN DASHBOARD -->
+<!-- ADMIN DASHBOARD MODAL -->
 <div id="adminModal" class="modal hidden">
   <div class="modal-content">
     <span class="close" id="closeAdmin">&times;</span>
@@ -92,6 +98,8 @@
     </form>
     <h3>Existing Products</h3>
     <ul id="admin-product-list"></ul>
+    <h3>Cart Items</h3>
+    <ul id="admin-cart-list"></ul>
   </div>
 </div>
 

@@ -140,24 +140,46 @@ document.addEventListener("DOMContentLoaded", () => {
     loginModal.classList.add("hidden");
     toast("Login successful ✅");
   });
+   /* ================= REGISTER ================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const registerBtn = document.getElementById("registerBtn");
+  const registerModal = document.getElementById("registerModal");
+  const closeRegister = document.getElementById("closeRegister");
+  const registerSubmit = document.getElementById("register-submit");
 
-  /* ================= REGISTER ================= */
-  document.getElementById("register-submit").addEventListener("click", (e) => {
-    e.preventDefault();
+  // Open modal
+  registerBtn.onclick = () => registerModal.classList.remove("hidden");
+
+  // Close modal when clicking X
+  closeRegister.onclick = () => registerModal.classList.add("hidden");
+
+  // Submit registration
+  registerSubmit.onclick = () => {
     const username = document.getElementById("register-username").value.trim();
     const email = document.getElementById("register-email").value.trim();
     const password = document.getElementById("register-password").value.trim();
-    if (!username || !email || !password) return alert("Fill all fields!");
+
+    if (!username || !email || !password) {
+      alert("Fill all fields!");
+      return;
+    }
+
+    // Save user in localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
     users.push({ username, email, password });
     localStorage.setItem("users", JSON.stringify(users));
-    toast("Registration successful ✅");
+
+    alert("Registration successful ✅");
+    
+    // Close modal
     registerModal.classList.add("hidden");
 
+    // Clear fields
     document.getElementById("register-username").value = "";
     document.getElementById("register-email").value = "";
     document.getElementById("register-password").value = "";
-  });
+  };
+});
 
   /* ================= BOOK SERVICE ================= */
   const bookBtn = document.getElementById("bookServiceBtn");
@@ -173,3 +195,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+

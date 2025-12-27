@@ -158,7 +158,23 @@ document.getElementById("submitPayment").onclick = () => {
 
   paymentModal.classList.add("hidden");
   alert("Payment submitted successfully!");
-};
+};document.getElementById("checkout-btn").addEventListener("click", () => {
+  if (!cartItems.length) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  document.getElementById("payAmount").textContent = total;
+
+  // show payment section
+  document.querySelectorAll("section").forEach(s =>
+    s.classList.add("hidden-section")
+  );
+  document.getElementById("payment").classList.remove("hidden-section");
+});
+
+   
 
   /* ================= LOGIN / REGISTER ================= */
   const loginModal = document.getElementById("loginModal");
@@ -205,7 +221,34 @@ document.getElementById("submitPayment").onclick = () => {
     } catch (e) {
       toast(e.message);
     }
-  });
+  });document.getElementById("payNowBtn").addEventListener("click", () => {
+  const phone = document.getElementById("mpesa-phone").value;
+  const status = document.getElementById("payment-status");
+
+  if (!phone || phone.length < 10) {
+    status.textContent = "❌ Enter a valid phone number";
+    status.style.color = "red";
+    return;
+  }
+
+  status.textContent = "⏳ Sending M-Pesa request...";
+  status.style.color = "#555";
+
+  // Simulate STK push delay
+  setTimeout(() => {
+    const mpesaCode = "MP" + Math.floor(Math.random() * 1000000);
+
+    status.textContent = `✅ Payment successful! Ref: ${mpesaCode}`;
+    status.style.color = "green";
+
+    saveOrder(mpesaCode);
+
+    cartItems = [];
+    updateCart();
+  }, 3000);
+});
+
+   
 
   /* ================= ADMIN PANEL ================= */
   adminPanelBtn.onclick = () =>
@@ -256,6 +299,23 @@ document.getElementById("submitPayment").onclick = () => {
     renderAdminProducts();
     toast("Product added");
   };
+function renderAdminOrders() {
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const list = document.getElementById("admin-orders");
+  list.innerHTML = "";
+
+  orders.forEach(o => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>Order ${o.id}</strong><br>
+      Amount: KES ${o.amount}<br>
+      Ref: ${o.mpesaCode}<br>
+      Status: ${o.status}
+      <hr>
+    `;
+    list.appendChild(li);
+  });
+}
 
   /* ================= TOAST ================= */
   function toast(msg) {
@@ -266,4 +326,5 @@ document.getElementById("submitPayment").onclick = () => {
     setTimeout(() => t.remove(), 3000);
   }
 });
+
 
